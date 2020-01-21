@@ -1,0 +1,1 @@
+INSERT INTO admins (id, created, updated, verified, access_level, avatar, email, first_name, last_name, password, username) VALUES (1, '2020-01-01 00:00:00.000', '2020-01-01 00:00:00.000', true, 0, 'u_img.png', '', 'root', 'admin', '@dmin#root', 'admin');
