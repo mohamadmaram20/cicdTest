@@ -78,5 +78,5 @@ public class Company extends AuditModel {
     private List<ReceptionDate> receptionDates = new ArrayList<>();
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Idea> idea = new ArrayList<>();
+    private List<Idea> ideas = new ArrayList<>();
 }

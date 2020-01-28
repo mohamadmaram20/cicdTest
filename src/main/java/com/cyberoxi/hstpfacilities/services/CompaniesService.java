@@ -1,6 +1,7 @@
 package com.cyberoxi.hstpfacilities.services;
 
 import com.cyberoxi.hstpfacilities.models.Company;
+import com.cyberoxi.hstpfacilities.models.responses.CompanyBrief;
 
 /**
  * @author Mohamad Zarei Maram
@@ -10,6 +11,8 @@ import com.cyberoxi.hstpfacilities.models.Company;
 public interface CompaniesService {
 
     Iterable<Company> getCompanies();
+
+    Iterable<CompanyBrief> getCompaniesBrief();
 
     Company getCompany(long id);
 

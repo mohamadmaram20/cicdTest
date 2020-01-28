@@ -37,6 +37,12 @@ public class CompaniesWebController {
         return ResponseEntity.ok(companiesService.getCompanies());
     }
 
+    @GetMapping("/brief")
+    @ApiOperation(value = "GetCompaniesBrief", notes = "Get all companies brief")
+    public ResponseEntity<?> getCompaniesBrief() {
+        return ResponseEntity.ok(companiesService.getCompaniesBrief());
+    }
+
     @GetMapping("/{id}")
     @ApiOperation(value = "GetCompany", notes = "Get one company by id")
     public ResponseEntity<?> getCompany(@PathVariable long id) {

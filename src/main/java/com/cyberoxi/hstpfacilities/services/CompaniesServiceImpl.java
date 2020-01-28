@@ -1,9 +1,14 @@
 package com.cyberoxi.hstpfacilities.services;
 
 import com.cyberoxi.hstpfacilities.models.Company;
+import com.cyberoxi.hstpfacilities.models.responses.CompanyBrief;
 import com.cyberoxi.hstpfacilities.repositories.CompaniesRepository;
+import com.fasterxml.jackson.databind.util.ArrayIterator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Mohamad Zarei Maram
@@ -23,6 +28,15 @@ public class CompaniesServiceImpl implements CompaniesService {
     @Override
     public Iterable<Company> getCompanies() {
         return companiesRepository.findAll();
+    }
+
+    @Override
+    public Iterable<CompanyBrief> getCompaniesBrief() {
+        List<CompanyBrief> companiesBrief = new ArrayList<>();
+        companiesRepository.findAll().forEach(company -> {
+            companiesBrief.add(new CompanyBrief(company.getId(), company.getName(), company.getNationalId(), company.getRegistrationNumber()));
+        });
+        return companiesBrief;
     }
 
     @Override
