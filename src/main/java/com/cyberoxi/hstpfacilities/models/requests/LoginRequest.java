@@ -8,7 +8,7 @@ import lombok.Data;
  * @since 1/21/20
  */
 @Data
-public class AdminLogin {
+public class LoginRequest {
 
     private String username;
     private String password;

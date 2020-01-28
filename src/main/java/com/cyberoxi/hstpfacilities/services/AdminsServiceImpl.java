@@ -1,8 +1,9 @@
 package com.cyberoxi.hstpfacilities.services;
 
-import com.cyberoxi.hstpfacilities.models.Admin;
 import com.cyberoxi.hstpfacilities.models.responses.AdminInformation;
-import com.cyberoxi.hstpfacilities.repositories.AdminsRepository;
+import com.cyberoxi.hstpfacilities.repositories.CompaniesRepository;
+import com.cyberoxi.hstpfacilities.repositories.EstablishmentsRepository;
+import com.cyberoxi.hstpfacilities.repositories.FacilitiesRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,20 +15,19 @@ import org.springframework.stereotype.Service;
 @Service
 public class AdminsServiceImpl implements AdminsService {
 
-    private AdminsRepository adminsRepository;
+    private CompaniesRepository companiesRepository;
+    private FacilitiesRepository facilitiesRepository;
+    private EstablishmentsRepository establishmentsRepository;
 
     @Autowired
-    public AdminsServiceImpl(AdminsRepository adminsRepository) {
-        this.adminsRepository = adminsRepository;
+    public AdminsServiceImpl(CompaniesRepository companiesRepository, FacilitiesRepository facilitiesRepository, EstablishmentsRepository establishmentsRepository) {
+        this.companiesRepository = companiesRepository;
+        this.facilitiesRepository = facilitiesRepository;
+        this.establishmentsRepository = establishmentsRepository;
     }
 
     @Override
     public AdminInformation getAdminInformation() {
-        return new AdminInformation(0);
-    }
-
-    @Override
-    public Admin adminLogin(String username, String password) {
-        return adminsRepository.findByUsernameAndPassword(username, password).get();
+        return new AdminInformation(companiesRepository.count(), facilitiesRepository.count(), establishmentsRepository.count());
     }
 }

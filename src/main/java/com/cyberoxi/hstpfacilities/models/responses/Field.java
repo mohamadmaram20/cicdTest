@@ -10,9 +10,8 @@ import lombok.Data;
  */
 @Data
 @AllArgsConstructor
-public class AdminInformation {
+public class Field {
 
-    private long companies;
-    private long facilities;
-    private long establishments;
+    private byte key;
+    private String value;
 }

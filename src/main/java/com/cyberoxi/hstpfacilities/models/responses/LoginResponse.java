@@ -10,9 +10,11 @@ import lombok.Data;
  */
 @Data
 @AllArgsConstructor
-public class AdminInformation {
+public class LoginResponse {
 
-    private long companies;
-    private long facilities;
-    private long establishments;
+    private long id;
+    private String name;
+    private char type;
+    private String avatar;
+    private int accessLevel;
 }

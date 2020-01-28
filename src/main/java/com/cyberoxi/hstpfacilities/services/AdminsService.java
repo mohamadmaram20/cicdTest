@@ -1,6 +1,5 @@
 package com.cyberoxi.hstpfacilities.services;
 
-import com.cyberoxi.hstpfacilities.models.Admin;
 import com.cyberoxi.hstpfacilities.models.responses.AdminInformation;
 
 /**
@@ -11,6 +10,4 @@ import com.cyberoxi.hstpfacilities.models.responses.AdminInformation;
 public interface AdminsService {
 
     AdminInformation getAdminInformation();
-
-    Admin adminLogin(String username, String password);
 }
