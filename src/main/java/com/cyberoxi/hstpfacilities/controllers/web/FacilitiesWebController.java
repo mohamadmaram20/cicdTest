@@ -1,11 +1,17 @@
 package com.cyberoxi.hstpfacilities.controllers.web;
 
 import com.cyberoxi.hstpfacilities.models.Facility;
+import com.cyberoxi.hstpfacilities.models.responses.Field;
 import com.cyberoxi.hstpfacilities.services.FacilitiesService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import static com.cyberoxi.hstpfacilities.GlobalVariables.WEB_ROUTE;
 
@@ -47,5 +53,19 @@ public class FacilitiesWebController {
     @ApiOperation(value = "UpdateFacility", notes = "Update a facility by id")
     public ResponseEntity<?> updateFacility(@PathVariable long id, @RequestBody Facility facility) {
         return ResponseEntity.ok(facilitiesService.updateFacility(id, facility));
+    }
+
+    @GetMapping("/fields")
+    @ApiOperation(value = "FacilitiesPrimitivesFields", notes = "Include branch, receptionType, type")
+    public ResponseEntity<?> facilityPrimitivesFields() {
+        Map<String, List<Field>> fields = new HashMap<>();
+
+        List<Field> changeType = new ArrayList<>();
+        changeType.add(new Field((byte) 1, "استمهال"));
+        changeType.add(new Field((byte) 2, "افزایش سقف"));
+        changeType.add(new Field((byte) 3, "عدم تعلق فاز بعدی"));
+        fields.put("changeType", changeType);
+
+        return ResponseEntity.ok(fields);
     }
 }
