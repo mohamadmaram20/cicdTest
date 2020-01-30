@@ -25,7 +25,7 @@ public class FacilitiesWebController {
         this.facilitiesService = facilitiesService;
     }
 
-    @GetMapping("/{companyId}")
+    @GetMapping("/company/{companyId}")
     @ApiOperation(value = "GetFacilities", notes = "Get all Facilities of a company")
     public ResponseEntity<?> getFacilities(@PathVariable long companyId) {
         return ResponseEntity.ok(facilitiesService.getFacilities(companyId));
@@ -37,7 +37,7 @@ public class FacilitiesWebController {
         return ResponseEntity.ok(facilitiesService.getFacility(id));
     }
 
-    @PostMapping("/{companyId}")
+    @PostMapping("/company/{companyId}")
     @ApiOperation(value = "AddFacility", notes = "Add a facility contract to a company")
     public ResponseEntity<?> addFacility(@PathVariable long companyId, @RequestBody Facility facility) {
         return ResponseEntity.ok(facilitiesService.addFacility(companyId, facility));

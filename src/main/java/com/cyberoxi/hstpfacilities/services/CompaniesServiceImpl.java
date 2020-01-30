@@ -34,7 +34,7 @@ public class CompaniesServiceImpl implements CompaniesService {
     public Iterable<CompanyBrief> getCompaniesBrief() {
         List<CompanyBrief> companiesBrief = new ArrayList<>();
         companiesRepository.findAll().forEach(company -> {
-            companiesBrief.add(new CompanyBrief(company.getId(), company.getName(), company.getNationalId(), company.getRegistrationNumber()));
+            companiesBrief.add(new CompanyBrief(company.getId(), company.getName(), company.getRegistrationNumber(), company.getNationalId()));
         });
         return companiesBrief;
     }

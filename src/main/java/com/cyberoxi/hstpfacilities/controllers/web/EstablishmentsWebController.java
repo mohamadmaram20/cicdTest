@@ -25,7 +25,7 @@ public class EstablishmentsWebController {
         this.establishmentService = establishmentService;
     }
 
-    @GetMapping("/{companyId}")
+    @GetMapping("/company/{companyId}")
     @ApiOperation(value = "GetEstablishments", notes = "Get all establishments of a company")
     public ResponseEntity<?> getEstablishments(@PathVariable long companyId) {
         return ResponseEntity.ok(establishmentService.getEstablishments(companyId));
@@ -37,7 +37,7 @@ public class EstablishmentsWebController {
         return ResponseEntity.ok(establishmentService.getEstablishment(id));
     }
 
-    @PostMapping("/{companyId}")
+    @PostMapping("/company/{companyId}")
     @ApiOperation(value = "AddEstablishment", notes = "Add a establishment contract to a company")
     public ResponseEntity<?> addEstablishment(@PathVariable long companyId, @RequestBody Establishment establishment) {
         return ResponseEntity.ok(establishmentService.addEstablishment(companyId, establishment));

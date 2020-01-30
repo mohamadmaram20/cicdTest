@@ -1,6 +1,5 @@
 package com.cyberoxi.hstpfacilities.controllers.web;
 
-import com.cyberoxi.hstpfacilities.models.Establishment;
 import com.cyberoxi.hstpfacilities.models.Idea;
 import com.cyberoxi.hstpfacilities.services.IdeasService;
 import io.swagger.annotations.ApiOperation;
@@ -18,6 +17,7 @@ import static com.cyberoxi.hstpfacilities.GlobalVariables.WEB_ROUTE;
 @RestController
 @RequestMapping(WEB_ROUTE + "/ideas")
 public class IdeasWebController {
+
     private IdeasService ideasService;
 
     @Autowired
@@ -25,7 +25,7 @@ public class IdeasWebController {
         this.ideasService = ideasService;
     }
 
-    @GetMapping("/{companyId}")
+    @GetMapping("/company/{companyId}")
     @ApiOperation(value = "GetIdeas", notes = "Get all ideas of a company")
     public ResponseEntity<?> getIdeas(@PathVariable long companyId) {
         return ResponseEntity.ok(ideasService.getIdeas(companyId));
@@ -37,7 +37,7 @@ public class IdeasWebController {
         return ResponseEntity.ok(ideasService.getIdea(id));
     }
 
-    @PostMapping("/{companyId}")
+    @PostMapping("/company/{companyId}")
     @ApiOperation(value = "AddIdea", notes = "Add a idea to a company")
     public ResponseEntity<?> addIdea(@PathVariable long companyId, @RequestBody Idea idea) {
         return ResponseEntity.ok(ideasService.addIdea(companyId, idea));
