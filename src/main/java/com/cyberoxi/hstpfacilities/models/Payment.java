@@ -3,14 +3,13 @@ package com.cyberoxi.hstpfacilities.models;
 import com.cyberoxi.hstpfacilities.models.audits.AuditModel;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModelProperty;
-import io.swagger.annotations.ApiParam;
 import lombok.Data;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.context.properties.bind.DefaultValue;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.util.Date;
+
+import static com.cyberoxi.hstpfacilities.GlobalVariables.TRACKING_CODE_LENGTH;
 
 /**
  * @author Mohamad Zarei Maram
@@ -26,6 +25,7 @@ public class Payment extends AuditModel {
     @Temporal(TemporalType.TIMESTAMP)
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
+    @ApiModelProperty(example = "2020-02-02 00:00")
     private Date transactionDate;
 
     @Column(nullable = false, updatable = false)
@@ -40,7 +40,7 @@ public class Payment extends AuditModel {
     private char contractType; // e = establishment, f = facility
     private long unitId;
 
-    @Column(length = 8)
+    @Column(length = TRACKING_CODE_LENGTH)
     @ApiModelProperty(hidden = true)
     private String trackingCode;
 }

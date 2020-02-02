@@ -1,5 +1,6 @@
 package com.cyberoxi.hstpfacilities.controllers;
 
+import com.cyberoxi.hstpfacilities.exceptions.BadRequestException;
 import com.cyberoxi.hstpfacilities.exceptions.NotAcceptableException;
 import com.cyberoxi.hstpfacilities.models.responses.ExceptionResponse;
 import lombok.extern.slf4j.Slf4j;
@@ -42,6 +43,12 @@ public class ExceptionsController extends ResponseEntityExceptionHandler {
     @ExceptionHandler({NoSuchElementException.class, DataIntegrityViolationException.class, InvalidDataAccessApiUsageException.class})
     public ResponseEntity<?> notFoundException(Exception exception) {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ExceptionResponse(HttpStatus.NOT_FOUND.value(), exception.getMessage()));
+    }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(BadRequestException.class)
+    public ResponseEntity<?> badRequestException(Exception exception) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ExceptionResponse(HttpStatus.BAD_REQUEST.value(), exception.getMessage()));
     }
 
     @ResponseStatus(HttpStatus.NOT_ACCEPTABLE)

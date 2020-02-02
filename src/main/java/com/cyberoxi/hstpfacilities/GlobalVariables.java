@@ -9,4 +9,6 @@ public class GlobalVariables {
 
     public static final String WEB_ROUTE = "/web";
     public static final String MANAGE_ROUTE = "/mng";
+
+    public static final int TRACKING_CODE_LENGTH = 8;
 }
