@@ -2,7 +2,11 @@ package com.cyberoxi.hstpfacilities.models;
 
 import com.cyberoxi.hstpfacilities.models.audits.AuditModel;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import io.swagger.annotations.ApiModelProperty;
+import io.swagger.annotations.ApiParam;
 import lombok.Data;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.context.properties.bind.DefaultValue;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
@@ -28,12 +32,15 @@ public class Payment extends AuditModel {
     private int amount;
 
     private byte type; // 1 = pos, 2 = cardToCard, 3 = cash, 4 = internet
-    private long referenceId;
+    private String referenceId;
 
     private long contractId;
+
+    @ApiModelProperty(example = "e")
     private char contractType; // e = establishment, f = facility
     private long unitId;
 
     @Column(length = 8)
+    @ApiModelProperty(hidden = true)
     private String trackingCode;
 }
