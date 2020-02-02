@@ -1,11 +1,9 @@
 package com.cyberoxi.hstpfacilities.services;
 
-import com.cyberoxi.hstpfacilities.models.Company;
+import com.cyberoxi.hstpfacilities.models.Unit;
 import com.cyberoxi.hstpfacilities.models.Idea;
-import com.cyberoxi.hstpfacilities.repositories.CompaniesRepository;
-import com.cyberoxi.hstpfacilities.repositories.FacilitiesRepository;
+import com.cyberoxi.hstpfacilities.repositories.UnitsRepository;
 import com.cyberoxi.hstpfacilities.repositories.IdeasRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
@@ -16,17 +14,17 @@ import org.springframework.stereotype.Service;
 @Service
 public class IdeasServiceImpl implements IdeasService {
 
-    private CompaniesRepository companiesRepository;
+    private UnitsRepository unitsRepository;
     private IdeasRepository ideasRepository;
 
-    public IdeasServiceImpl(CompaniesRepository companiesRepository, IdeasRepository ideasRepository) {
-        this.companiesRepository = companiesRepository;
+    public IdeasServiceImpl(UnitsRepository unitsRepository, IdeasRepository ideasRepository) {
+        this.unitsRepository = unitsRepository;
         this.ideasRepository = ideasRepository;
     }
 
     @Override
-    public Iterable<Idea> getIdeas(long companyId) {
-        return companiesRepository.findById(companyId).get().getIdeas();
+    public Iterable<Idea> getIdeas(long unitId) {
+        return unitsRepository.findById(unitId).get().getIdeas();
     }
 
     @Override
@@ -35,10 +33,10 @@ public class IdeasServiceImpl implements IdeasService {
     }
 
     @Override
-    public Company addIdea(long companyId, Idea idea) {
-        Company findCompany = companiesRepository.findById(companyId).get();
-        findCompany.getIdeas().add(idea);
-        return companiesRepository.save(findCompany);
+    public Unit addIdea(long unitId, Idea idea) {
+        Unit findUnit = unitsRepository.findById(unitId).get();
+        findUnit.getIdeas().add(idea);
+        return unitsRepository.save(findUnit);
     }
 
     @Override

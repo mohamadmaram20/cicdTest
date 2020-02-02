@@ -1,6 +1,6 @@
 package com.cyberoxi.hstpfacilities.services;
 
-import com.cyberoxi.hstpfacilities.models.Company;
+import com.cyberoxi.hstpfacilities.models.Unit;
 import com.cyberoxi.hstpfacilities.models.Idea;
 
 /**
@@ -10,11 +10,11 @@ import com.cyberoxi.hstpfacilities.models.Idea;
  */
 public interface IdeasService {
 
-    Iterable<Idea> getIdeas(long companyId);
+    Iterable<Idea> getIdeas(long unitId);
 
     Idea getIdea(long id);
 
-    Company addIdea(long companyId, Idea idea);
+    Unit addIdea(long unitId, Idea idea);
 
     Idea updateIdea(long id, Idea idea);
 }

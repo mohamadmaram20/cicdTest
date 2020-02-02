@@ -1,8 +1,8 @@
 package com.cyberoxi.hstpfacilities.services;
 
-import com.cyberoxi.hstpfacilities.models.Company;
+import com.cyberoxi.hstpfacilities.models.Unit;
 import com.cyberoxi.hstpfacilities.models.Facility;
-import com.cyberoxi.hstpfacilities.repositories.CompaniesRepository;
+import com.cyberoxi.hstpfacilities.repositories.UnitsRepository;
 import com.cyberoxi.hstpfacilities.repositories.FacilitiesRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,18 +15,18 @@ import org.springframework.stereotype.Service;
 @Service
 public class FacilitiesServiceImpl implements FacilitiesService {
 
-    private CompaniesRepository companiesRepository;
+    private UnitsRepository unitsRepository;
     private FacilitiesRepository facilitiesRepository;
 
     @Autowired
-    public FacilitiesServiceImpl(CompaniesRepository companiesRepository, FacilitiesRepository facilitiesRepository) {
-        this.companiesRepository = companiesRepository;
+    public FacilitiesServiceImpl(UnitsRepository unitsRepository, FacilitiesRepository facilitiesRepository) {
+        this.unitsRepository = unitsRepository;
         this.facilitiesRepository = facilitiesRepository;
     }
 
     @Override
-    public Iterable<Facility> getFacilities(long companyId) {
-        return companiesRepository.findById(companyId).get().getFacilities();
+    public Iterable<Facility> getFacilities(long unitId) {
+        return unitsRepository.findById(unitId).get().getFacilities();
     }
 
     @Override
@@ -35,10 +35,10 @@ public class FacilitiesServiceImpl implements FacilitiesService {
     }
 
     @Override
-    public Company addFacility(long companyId, Facility facility) {
-        Company findCompany = companiesRepository.findById(companyId).get();
-        findCompany.getFacilities().add(facility);
-        return companiesRepository.save(findCompany);
+    public Unit addFacility(long unitId, Facility facility) {
+        Unit findUnit = unitsRepository.findById(unitId).get();
+        findUnit.getFacilities().add(facility);
+        return unitsRepository.save(findUnit);
     }
 
     @Override

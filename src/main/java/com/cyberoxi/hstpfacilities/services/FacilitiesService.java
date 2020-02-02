@@ -1,6 +1,6 @@
 package com.cyberoxi.hstpfacilities.services;
 
-import com.cyberoxi.hstpfacilities.models.Company;
+import com.cyberoxi.hstpfacilities.models.Unit;
 import com.cyberoxi.hstpfacilities.models.Facility;
 
 /**
@@ -10,11 +10,11 @@ import com.cyberoxi.hstpfacilities.models.Facility;
  */
 public interface FacilitiesService {
 
-    Iterable<Facility> getFacilities(long companyId);
+    Iterable<Facility> getFacilities(long unitId);
 
     Facility getFacility(long id);
 
-    Company addFacility(long companyId, Facility facility);
+    Unit addFacility(long unitId, Facility facility);
 
     Facility updateFacility(long id, Facility facility);
 }

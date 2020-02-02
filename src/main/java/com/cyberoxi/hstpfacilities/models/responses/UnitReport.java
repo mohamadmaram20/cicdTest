@@ -12,7 +12,7 @@ import java.util.List;
  */
 @Data
 @AllArgsConstructor
-public class CompanyReport {
+public class UnitReport {
 
     private int installmentsNumber; //تعداد اقساط وام
     private int loanAmountPerMonth; //مبلغ وام در هر ماه

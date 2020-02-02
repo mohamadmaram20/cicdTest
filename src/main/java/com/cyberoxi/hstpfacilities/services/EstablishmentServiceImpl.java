@@ -1,8 +1,8 @@
 package com.cyberoxi.hstpfacilities.services;
 
-import com.cyberoxi.hstpfacilities.models.Company;
+import com.cyberoxi.hstpfacilities.models.Unit;
 import com.cyberoxi.hstpfacilities.models.Establishment;
-import com.cyberoxi.hstpfacilities.repositories.CompaniesRepository;
+import com.cyberoxi.hstpfacilities.repositories.UnitsRepository;
 import com.cyberoxi.hstpfacilities.repositories.EstablishmentsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,18 +15,18 @@ import org.springframework.stereotype.Service;
 @Service
 public class EstablishmentServiceImpl implements EstablishmentService {
 
-    private CompaniesRepository companiesRepository;
+    private UnitsRepository unitsRepository;
     private EstablishmentsRepository establishmentsRepository;
 
     @Autowired
-    public EstablishmentServiceImpl(CompaniesRepository companiesRepository, EstablishmentsRepository establishmentsRepository) {
-        this.companiesRepository = companiesRepository;
+    public EstablishmentServiceImpl(UnitsRepository unitsRepository, EstablishmentsRepository establishmentsRepository) {
+        this.unitsRepository = unitsRepository;
         this.establishmentsRepository = establishmentsRepository;
     }
 
     @Override
-    public Iterable<Establishment> getEstablishments(long companyId) {
-        return companiesRepository.findById(companyId).get().getEstablishments();
+    public Iterable<Establishment> getEstablishments(long unitId) {
+        return unitsRepository.findById(unitId).get().getEstablishments();
     }
 
     @Override
@@ -35,10 +35,10 @@ public class EstablishmentServiceImpl implements EstablishmentService {
     }
 
     @Override
-    public Company addEstablishment(long companyId, Establishment establishment) {
-        Company findCompany = companiesRepository.findById(companyId).get();
-        findCompany.getEstablishments().add(establishment);
-        return companiesRepository.save(findCompany);
+    public Unit addEstablishment(long unitId, Establishment establishment) {
+        Unit findUnit = unitsRepository.findById(unitId).get();
+        findUnit.getEstablishments().add(establishment);
+        return unitsRepository.save(findUnit);
     }
 
     @Override

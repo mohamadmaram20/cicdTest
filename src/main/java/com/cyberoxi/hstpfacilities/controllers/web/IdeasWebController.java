@@ -31,10 +31,10 @@ public class IdeasWebController {
         this.ideasService = ideasService;
     }
 
-    @GetMapping("/company/{companyId}")
-    @ApiOperation(value = "GetIdeas", notes = "Get all ideas of a company")
-    public ResponseEntity<?> getIdeas(@PathVariable long companyId) {
-        return ResponseEntity.ok(ideasService.getIdeas(companyId));
+    @GetMapping("/unit/{unitId}")
+    @ApiOperation(value = "GetIdeas", notes = "Get all ideas of a unit")
+    public ResponseEntity<?> getIdeas(@PathVariable long unitId) {
+        return ResponseEntity.ok(ideasService.getIdeas(unitId));
     }
 
     @GetMapping("/{id}")
@@ -43,10 +43,10 @@ public class IdeasWebController {
         return ResponseEntity.ok(ideasService.getIdea(id));
     }
 
-    @PostMapping("/company/{companyId}")
-    @ApiOperation(value = "AddIdea", notes = "Add a idea to a company")
-    public ResponseEntity<?> addIdea(@PathVariable long companyId, @RequestBody Idea idea) {
-        return ResponseEntity.ok(ideasService.addIdea(companyId, idea));
+    @PostMapping("/unit/{unitId}")
+    @ApiOperation(value = "AddIdea", notes = "Add a idea to a unit")
+    public ResponseEntity<?> addIdea(@PathVariable long unitId, @RequestBody Idea idea) {
+        return ResponseEntity.ok(ideasService.addIdea(unitId, idea));
     }
 
     @PostMapping("/{id}")
@@ -56,7 +56,7 @@ public class IdeasWebController {
     }
 
     @GetMapping("/fields")
-    @ApiOperation(value = "CompanyPrimitivesFields", notes = "Include branch, receptionType, type")
+    @ApiOperation(value = "UnitPrimitivesFields", notes = "Include branch, receptionType, type")
     public ResponseEntity<?> ideaPrimitivesFields() {
         Map<String, List<Field>> fields = new HashMap<>();
 

@@ -1,6 +1,6 @@
 package com.cyberoxi.hstpfacilities.services;
 
-import com.cyberoxi.hstpfacilities.models.Company;
+import com.cyberoxi.hstpfacilities.models.Unit;
 import com.cyberoxi.hstpfacilities.models.Establishment;
 
 /**
@@ -10,11 +10,11 @@ import com.cyberoxi.hstpfacilities.models.Establishment;
  */
 public interface EstablishmentService {
 
-    Iterable<Establishment> getEstablishments(long companyId);
+    Iterable<Establishment> getEstablishments(long unitId);
 
     Establishment getEstablishment(long id);
 
-    Company addEstablishment(long companyId, Establishment establishment);
+    Unit addEstablishment(long unitId, Establishment establishment);
 
     Establishment updateEstablishment(long id, Establishment establishment);
 }

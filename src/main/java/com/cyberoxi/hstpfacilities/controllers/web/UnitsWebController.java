@@ -1,8 +1,8 @@
 package com.cyberoxi.hstpfacilities.controllers.web;
 
-import com.cyberoxi.hstpfacilities.models.Company;
+import com.cyberoxi.hstpfacilities.models.Unit;
 import com.cyberoxi.hstpfacilities.models.responses.Field;
-import com.cyberoxi.hstpfacilities.services.CompaniesService;
+import com.cyberoxi.hstpfacilities.services.UnitsService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -21,49 +21,55 @@ import static com.cyberoxi.hstpfacilities.GlobalVariables.WEB_ROUTE;
  * @since 1/22/2020
  */
 @RestController
-@RequestMapping(WEB_ROUTE + "/companies")
-public class CompaniesWebController {
+@RequestMapping(WEB_ROUTE + "/units")
+public class UnitsWebController {
 
-    private CompaniesService companiesService;
+    private UnitsService unitsService;
 
     @Autowired
-    public CompaniesWebController(CompaniesService companiesService) {
-        this.companiesService = companiesService;
+    public UnitsWebController(UnitsService unitsService) {
+        this.unitsService = unitsService;
     }
 
     @GetMapping
-    @ApiOperation(value = "GetCompanies", notes = "Get all companies")
-    public ResponseEntity<?> getCompanies() {
-        return ResponseEntity.ok(companiesService.getCompanies());
+    @ApiOperation(value = "GetUnits", notes = "Get all units")
+    public ResponseEntity<?> getUnits() {
+        return ResponseEntity.ok(unitsService.getUnits());
     }
 
     @GetMapping("/brief")
-    @ApiOperation(value = "GetCompaniesBrief", notes = "Get all companies brief")
-    public ResponseEntity<?> getCompaniesBrief() {
-        return ResponseEntity.ok(companiesService.getCompaniesBrief());
+    @ApiOperation(value = "GetUnitsBrief", notes = "Get all units brief")
+    public ResponseEntity<?> getUnitsBrief() {
+        return ResponseEntity.ok(unitsService.getUnitsBrief());
     }
 
     @GetMapping("/{id}")
-    @ApiOperation(value = "GetCompany", notes = "Get one company by id")
-    public ResponseEntity<?> getCompany(@PathVariable long id) {
-        return ResponseEntity.ok(companiesService.getCompany(id));
+    @ApiOperation(value = "GetUnit", notes = "Get one unit by id")
+    public ResponseEntity<?> getUnit(@PathVariable long id) {
+        return ResponseEntity.ok(unitsService.getUnit(id));
     }
 
     @PostMapping
-    @ApiOperation(value = "AddCompany", notes = "Add new company")
-    public ResponseEntity<?> insertCompany(@RequestBody Company company) {
-        return ResponseEntity.ok(companiesService.saveCompany(company));
+    @ApiOperation(value = "AddUnit", notes = "Add new unit")
+    public ResponseEntity<?> insertUnit(@RequestBody Unit unit) {
+        return ResponseEntity.ok(unitsService.saveUnit(unit));
     }
 
     @PostMapping("/{id}")
-    @ApiOperation(value = "UpdateCompany", notes = "Update one company by id")
-    public ResponseEntity<?> updateCompany(@PathVariable long id, @RequestBody Company company) {
-        return ResponseEntity.ok(companiesService.updateCompany(id, company));
+    @ApiOperation(value = "UpdateUnit", notes = "Update one unit by id")
+    public ResponseEntity<?> updateUnit(@PathVariable long id, @RequestBody Unit unit) {
+        return ResponseEntity.ok(unitsService.updateUnit(id, unit));
+    }
+
+    @GetMapping("/report/{id}")
+    @ApiOperation(value = "UnitReport", notes = "Get one unit report by id")
+    public ResponseEntity<?> unitReport(@PathVariable long id) {
+        return ResponseEntity.ok(unitsService.getUnitReport(id));
     }
 
     @GetMapping("/fields")
-    @ApiOperation(value = "CompanyPrimitivesFields", notes = "Include branch, receptionType, type")
-    public ResponseEntity<?> companyPrimitivesFields() {
+    @ApiOperation(value = "UnitPrimitivesFields", notes = "Include branch, receptionType, type")
+    public ResponseEntity<?> unitPrimitivesFields() {
         Map<String, List<Field>> fields = new HashMap<>();
 
         List<Field> branches = new ArrayList<>();

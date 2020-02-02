@@ -31,10 +31,10 @@ public class FacilitiesWebController {
         this.facilitiesService = facilitiesService;
     }
 
-    @GetMapping("/company/{companyId}")
-    @ApiOperation(value = "GetFacilities", notes = "Get all Facilities of a company")
-    public ResponseEntity<?> getFacilities(@PathVariable long companyId) {
-        return ResponseEntity.ok(facilitiesService.getFacilities(companyId));
+    @GetMapping("/unit/{unitId}")
+    @ApiOperation(value = "GetFacilities", notes = "Get all Facilities of a unit")
+    public ResponseEntity<?> getFacilities(@PathVariable long unitId) {
+        return ResponseEntity.ok(facilitiesService.getFacilities(unitId));
     }
 
     @GetMapping("/{id}")
@@ -43,10 +43,10 @@ public class FacilitiesWebController {
         return ResponseEntity.ok(facilitiesService.getFacility(id));
     }
 
-    @PostMapping("/company/{companyId}")
-    @ApiOperation(value = "AddFacility", notes = "Add a facility contract to a company")
-    public ResponseEntity<?> addFacility(@PathVariable long companyId, @RequestBody Facility facility) {
-        return ResponseEntity.ok(facilitiesService.addFacility(companyId, facility));
+    @PostMapping("/unit/{unitId}")
+    @ApiOperation(value = "AddFacility", notes = "Add a facility contract to a unit")
+    public ResponseEntity<?> addFacility(@PathVariable long unitId, @RequestBody Facility facility) {
+        return ResponseEntity.ok(facilitiesService.addFacility(unitId, facility));
     }
 
     @PostMapping("/{id}")

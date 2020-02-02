@@ -1,7 +1,7 @@
 package com.cyberoxi.hstpfacilities.services;
 
 import com.cyberoxi.hstpfacilities.models.responses.AdminInformation;
-import com.cyberoxi.hstpfacilities.repositories.CompaniesRepository;
+import com.cyberoxi.hstpfacilities.repositories.UnitsRepository;
 import com.cyberoxi.hstpfacilities.repositories.EstablishmentsRepository;
 import com.cyberoxi.hstpfacilities.repositories.FacilitiesRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,19 +15,19 @@ import org.springframework.stereotype.Service;
 @Service
 public class AdminsServiceImpl implements AdminsService {
 
-    private CompaniesRepository companiesRepository;
+    private UnitsRepository unitsRepository;
     private FacilitiesRepository facilitiesRepository;
     private EstablishmentsRepository establishmentsRepository;
 
     @Autowired
-    public AdminsServiceImpl(CompaniesRepository companiesRepository, FacilitiesRepository facilitiesRepository, EstablishmentsRepository establishmentsRepository) {
-        this.companiesRepository = companiesRepository;
+    public AdminsServiceImpl(UnitsRepository unitsRepository, FacilitiesRepository facilitiesRepository, EstablishmentsRepository establishmentsRepository) {
+        this.unitsRepository = unitsRepository;
         this.facilitiesRepository = facilitiesRepository;
         this.establishmentsRepository = establishmentsRepository;
     }
 
     @Override
     public AdminInformation getAdminInformation() {
-        return new AdminInformation(companiesRepository.count(), facilitiesRepository.count(), establishmentsRepository.count());
+        return new AdminInformation(unitsRepository.count(), facilitiesRepository.count(), establishmentsRepository.count(), 0, 0, 0, null);
     }
 }

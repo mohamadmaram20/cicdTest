@@ -12,7 +12,7 @@ import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class CompanyBrief {
+public class UnitBrief {
 
     private long id;
     private String name;

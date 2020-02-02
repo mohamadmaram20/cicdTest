@@ -19,14 +19,9 @@ import java.util.List;
  * @since 1/21/2020
  */
 @Entity
-@Table(name = "companies")
+@Table(name = "units")
 @Data
-public class Company extends AuditModel {
-
-    @NotBlank
-    @NotNull
-    @Column(nullable = false, unique = true)
-    private String name;
+public class Unit extends AuditModel {
 
     @NotBlank
     @NotNull
@@ -43,6 +38,7 @@ public class Company extends AuditModel {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date registrationDate;
 
+    private String name;
     private byte type;
     private byte branch;
     private byte receptionType;
@@ -50,10 +46,8 @@ public class Company extends AuditModel {
     private String registrationNumber;
     private String nationalId;
 
-    private String CeoFirstName;
-    private String CeoLastName;
-    private String CeoNationalCode;
-    private String CeoPhoneNumber;
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+    private Person person;
 
     private String phoneNumber;
     private String website;
