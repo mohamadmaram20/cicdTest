@@ -1,6 +1,7 @@
 package com.cyberoxi.hstpfacilities.configurations;
 
 import com.cyberoxi.hstpfacilities.models.*;
+import com.cyberoxi.hstpfacilities.models.responses.AdminReport;
 import com.cyberoxi.hstpfacilities.models.responses.UnitReport;
 import com.fasterxml.classmate.TypeResolver;
 import org.springframework.context.annotation.Bean;
@@ -41,7 +42,9 @@ public class SpringFoxConfiguration {
                         typeResolver.resolve(Idea.class),
                         typeResolver.resolve(ReceptionDate.class),
                         typeResolver.resolve(UnitReport.class),
-                        typeResolver.resolve(Person.class)
+                        typeResolver.resolve(AdminReport.class),
+                        typeResolver.resolve(Person.class),
+                        typeResolver.resolve(Payment.class)
                 );
     }
 

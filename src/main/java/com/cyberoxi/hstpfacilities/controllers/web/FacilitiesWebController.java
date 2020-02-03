@@ -32,7 +32,7 @@ public class FacilitiesWebController {
     }
 
     @GetMapping("/unit/{unitId}")
-    @ApiOperation(value = "GetFacilities", notes = "Get all Facilities of a unit")
+    @ApiOperation(value = "GetFacilities", notes = "Get all facilities of a unit")
     public ResponseEntity<?> getFacilities(@PathVariable long unitId) {
         return ResponseEntity.ok(facilitiesService.getFacilities(unitId));
     }

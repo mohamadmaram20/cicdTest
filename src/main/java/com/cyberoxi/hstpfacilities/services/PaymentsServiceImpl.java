@@ -36,6 +36,16 @@ public class PaymentsServiceImpl implements PaymentsService {
     }
 
     @Override
+    public Iterable<Payment> getPayments(long unitId) {
+        return paymentsRepository.findAllByUnitId(unitId);
+    }
+
+    @Override
+    public Payment getPayment(long id) {
+        return paymentsRepository.findById(id).get();
+    }
+
+    @Override
     public Payment savePayment(Payment payment) {
         if (unitsRepository.findById(payment.getUnitId()).isPresent() &&
                 (establishmentsRepository.findById(payment.getContractId()).isPresent() ||

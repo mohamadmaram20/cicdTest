@@ -11,4 +11,6 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface PaymentsRepository extends CrudRepository<Payment, Long> {
+
+    Iterable<Payment> findAllByUnitId(long unitId);
 }

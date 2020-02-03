@@ -38,7 +38,7 @@ public class IdeasWebController {
     }
 
     @GetMapping("/{id}")
-    @ApiOperation(value = "GetIdea", notes = "Get a Idea by id")
+    @ApiOperation(value = "GetIdea", notes = "Get a idea by id")
     public ResponseEntity<?> getIdea(@PathVariable long id) {
         return ResponseEntity.ok(ideasService.getIdea(id));
     }

@@ -12,6 +12,7 @@ import lombok.Data;
 @AllArgsConstructor
 public class AdminReport {
 
+    private long unitId;
     private String unitName;
     private byte branch;
     private int debtFacilityRemained; //مانده بدهی تسهیلات

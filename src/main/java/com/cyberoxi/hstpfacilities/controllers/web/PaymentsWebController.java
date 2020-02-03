@@ -5,10 +5,7 @@ import com.cyberoxi.hstpfacilities.services.PaymentsService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import static com.cyberoxi.hstpfacilities.GlobalVariables.WEB_ROUTE;
 
@@ -26,6 +23,18 @@ public class PaymentsWebController {
     @Autowired
     public PaymentsWebController(PaymentsService paymentsService) {
         this.paymentsService = paymentsService;
+    }
+
+    @GetMapping("/unit/{unitId}")
+    @ApiOperation(value = "GetPayments", notes = "Get all payments of a unit")
+    public ResponseEntity<?> getPayments(@PathVariable long unitId) {
+        return ResponseEntity.ok(paymentsService.getPayments(unitId));
+    }
+
+    @GetMapping("/{id}")
+    @ApiOperation(value = "GetPayment", notes = "Get a payment by id")
+    public ResponseEntity<?> getPayment(@PathVariable long id) {
+        return ResponseEntity.ok(paymentsService.getPayment(id));
     }
 
     @PostMapping
