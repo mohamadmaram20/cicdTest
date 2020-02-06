@@ -25,6 +25,12 @@ public class PaymentsWebController {
         this.paymentsService = paymentsService;
     }
 
+    @GetMapping
+    @ApiOperation(value = "GetAllPayments", notes = "Get all payments")
+    public ResponseEntity<?> getPayments() {
+        return ResponseEntity.ok(paymentsService.getPayments());
+    }
+
     @GetMapping("/unit/{unitId}")
     @ApiOperation(value = "GetPayments", notes = "Get all payments of a unit")
     public ResponseEntity<?> getPayments(@PathVariable long unitId) {

@@ -10,6 +10,8 @@ import com.cyberoxi.hstpfacilities.models.Payment;
  */
 public interface PaymentsService {
 
+    Iterable<Payment> getPayments();
+
     Iterable<Payment> getPayments(long unitId);
 
     Payment getPayment(long id);

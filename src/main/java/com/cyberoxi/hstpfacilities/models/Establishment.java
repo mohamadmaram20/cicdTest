@@ -42,5 +42,5 @@ public class Establishment extends AuditModel {
 
     private int numberOfMonth;
     private int numberOfDay;
-    private int finalContractMonthlyAmount; //مبلغ نهایی  قرارداد ماهانه
+    private long finalContractMonthlyAmount; //مبلغ نهایی قرارداد ماهانه
 }

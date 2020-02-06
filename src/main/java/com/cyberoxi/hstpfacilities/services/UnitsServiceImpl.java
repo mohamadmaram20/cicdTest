@@ -64,17 +64,17 @@ public class UnitsServiceImpl implements UnitsService {
     public UnitReport getUnitReport(long id) {
         Unit findUnit = unitsRepository.findById(id).get();
         // TODO fill fields
-        int installmentsNumber = 0; //تعداد اقساط وام
-        int loanAmountPerMonth = 0; //مبلغ وام در هر ماه
-        int debtInstallmentsArrears = 0; //مبلغ بدهی اقساط وام معوقه
+        long installmentsNumber = 0; //تعداد اقساط وام
+        long loanAmountPerMonth = 0; //مبلغ وام در هر ماه
+        long debtInstallmentsArrears = 0; //مبلغ بدهی اقساط وام معوقه
         List<DateNumber> debtEstablishmentEachYear = new ArrayList<>(); //مبلغ بدهی استقرار به تفکیک سال
         List<DateNumber> debtEstablishmentEachMonth = new ArrayList<>(); //مبلغ بدهی استقرار به تفکیک ماه
         List<DateNumber> facilityPaidEachMonth = new ArrayList<>(); //مبلغ پرداختی تسهیلات به تفکیک هر ماه
         List<DateNumber> establishmentPaidEachMonth = new ArrayList<>(); //مبلغ پرداختی استقرار به تفکیک هر ماه
-        int totalFacilityAmountPaid = 0; //کل مبلغ پرداختی تسهیلات
-        int totalEstablishmentAmountPaid = 0; //کل مبلغ پرداختی استقرار
-        int debtFacilityRemained = 0; //مانده بدهی تسهیلات
-        int debtEstablishmentRemained = 0; //مانده بدهی استقرار
+        long totalFacilityAmountPaid = 0; //کل مبلغ پرداختی تسهیلات
+        long totalEstablishmentAmountPaid = 0; //کل مبلغ پرداختی استقرار
+        long debtFacilityRemained = 0; //مانده بدهی تسهیلات
+        long debtEstablishmentRemained = 0; //مانده بدهی استقرار
 
         for (Facility facility : findUnit.getFacilities()) {
             installmentsNumber = installmentsNumber + facility.getRepaymentMonthsNumber();

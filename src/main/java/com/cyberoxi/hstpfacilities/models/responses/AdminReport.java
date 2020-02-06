@@ -15,7 +15,7 @@ public class AdminReport {
     private long unitId;
     private String unitName;
     private byte branch;
-    private int debtFacilityRemained; //مانده بدهی تسهیلات
-    private int debtEstablishmentRemained; //مانده بدهی استقرار
+    private long debtFacilityRemained; //مانده بدهی تسهیلات
+    private long debtEstablishmentRemained; //مانده بدهی استقرار
 
 }

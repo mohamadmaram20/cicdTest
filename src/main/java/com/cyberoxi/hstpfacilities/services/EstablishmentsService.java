@@ -8,7 +8,7 @@ import com.cyberoxi.hstpfacilities.models.Establishment;
  * @version 0.0.1
  * @since 1/28/2020
  */
-public interface EstablishmentService {
+public interface EstablishmentsService {
 
     Iterable<Establishment> getEstablishments(long unitId);
 

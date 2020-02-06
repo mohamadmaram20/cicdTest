@@ -36,27 +36,27 @@ public class Facility extends AuditModel {
 
     private String approvedText;
     private byte changeType;
-    private int approvedAmount;
-    private int totalReceivedFacility;
-    private int repaymentMonthsNumber;
-    private int monthlyRepaymentAmount;
+    private long approvedAmount; //مبلغ مصوب
+    private long totalReceivedFacility; //کل تسهیلات دریافتی(میلیون ریال)
+    private int repaymentMonthsNumber; //تعداد ماههای باز پرداخت
+    private long monthlyRepaymentAmount; //مبلغ اقساط ماهانه باز پرداخت تسهيلات
 
     @Temporal(TemporalType.DATE)
     @JsonFormat(pattern = "yyyy-MM-dd")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private Date installmentsStartDate;
+    private Date installmentsStartDate; //تاريخ شروع اقساط
 
     @Temporal(TemporalType.DATE)
     @JsonFormat(pattern = "yyyy-MM-dd")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private Date installmentsEndDate;
+    private Date installmentsEndDate; //تاريخ خاتمه اقساط
 
     @Temporal(TemporalType.DATE)
     @JsonFormat(pattern = "yyyy-MM-dd")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date installmentsRepaymentDate; //تاریخ آخرین بازپرداخت اقساط
 
-    private int installmentsRepaymentAmount;
+    private long installmentsRepaymentAmount; //مبلغ بازپرداخت اقساط
 
     @Temporal(TemporalType.DATE)
     @JsonFormat(pattern = "yyyy-MM-dd")

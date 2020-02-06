@@ -18,9 +18,9 @@ public class AdminInformation {
     private long facilities;
     private long establishments;
 
-    private long totalArrears;
-    private long establishmentArrears;
-    private long facilitiesArrears;
+    private long totalArrears; //کل معوقات
+    private long establishmentArrears; //معوقات استقرار
+    private long facilitiesArrears; //معوقات تسهیلات
 
     private List<AdminReport> adminReports;
 }

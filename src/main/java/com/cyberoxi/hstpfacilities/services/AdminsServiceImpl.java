@@ -1,5 +1,6 @@
 package com.cyberoxi.hstpfacilities.services;
 
+import com.cyberoxi.hstpfacilities.models.Unit;
 import com.cyberoxi.hstpfacilities.models.responses.AdminInformation;
 import com.cyberoxi.hstpfacilities.models.responses.AdminReport;
 import com.cyberoxi.hstpfacilities.repositories.UnitsRepository;
@@ -33,7 +34,10 @@ public class AdminsServiceImpl implements AdminsService {
     @Override
     public AdminInformation getAdminInformation() {
         List<AdminReport> adminReports = new ArrayList<>();
-        adminReports.add(new AdminReport(0, "", (byte) 0, 0, 0));
+        Iterable<Unit> units = unitsRepository.findAll();
+        for (Unit unit : units) {
+            adminReports.add(new AdminReport(unit.getId(), unit.getName(), unit.getBranch(), 0, 0));
+        }
         return new AdminInformation(unitsRepository.count(), facilitiesRepository.count(), establishmentsRepository.count(), 0, 0, 0, adminReports);
     }
 }

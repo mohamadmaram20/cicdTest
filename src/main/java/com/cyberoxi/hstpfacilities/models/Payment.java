@@ -4,6 +4,8 @@ import com.cyberoxi.hstpfacilities.models.audits.AuditModel;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+import org.hibernate.annotations.Formula;
+import org.springframework.data.annotation.Persistent;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
@@ -29,7 +31,7 @@ public class Payment extends AuditModel {
     private Date transactionDate;
 
     @Column(nullable = false, updatable = false)
-    private int amount;
+    private long amount;
 
     private byte type; // 1 = pos, 2 = cardToCard, 3 = cash, 4 = internet
     private String referenceId;
@@ -43,4 +45,8 @@ public class Payment extends AuditModel {
     @Column(length = TRACKING_CODE_LENGTH)
     @ApiModelProperty(hidden = true)
     private String trackingCode;
+
+    @Persistent
+    @Formula("(SELECT units.name FROM units where units.id = unit_id)")
+    private String unitName;
 }

@@ -13,13 +13,13 @@ import org.springframework.stereotype.Service;
  * @since 1/28/2020
  */
 @Service
-public class EstablishmentServiceImpl implements EstablishmentService {
+public class EstablishmentsServiceImpl implements EstablishmentsService {
 
     private UnitsRepository unitsRepository;
     private EstablishmentsRepository establishmentsRepository;
 
     @Autowired
-    public EstablishmentServiceImpl(UnitsRepository unitsRepository, EstablishmentsRepository establishmentsRepository) {
+    public EstablishmentsServiceImpl(UnitsRepository unitsRepository, EstablishmentsRepository establishmentsRepository) {
         this.unitsRepository = unitsRepository;
         this.establishmentsRepository = establishmentsRepository;
     }

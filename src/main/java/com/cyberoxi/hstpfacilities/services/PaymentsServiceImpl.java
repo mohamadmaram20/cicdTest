@@ -36,6 +36,11 @@ public class PaymentsServiceImpl implements PaymentsService {
     }
 
     @Override
+    public Iterable<Payment> getPayments() {
+        return paymentsRepository.findAll();
+    }
+
+    @Override
     public Iterable<Payment> getPayments(long unitId) {
         return paymentsRepository.findAllByUnitId(unitId);
     }
