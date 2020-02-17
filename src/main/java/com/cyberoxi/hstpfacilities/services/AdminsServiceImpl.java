@@ -23,21 +23,29 @@ public class AdminsServiceImpl implements AdminsService {
     private UnitsRepository unitsRepository;
     private FacilitiesRepository facilitiesRepository;
     private EstablishmentsRepository establishmentsRepository;
+    private AuditorService auditorService;
 
     @Autowired
-    public AdminsServiceImpl(UnitsRepository unitsRepository, FacilitiesRepository facilitiesRepository, EstablishmentsRepository establishmentsRepository) {
+    public AdminsServiceImpl(UnitsRepository unitsRepository, FacilitiesRepository facilitiesRepository, EstablishmentsRepository establishmentsRepository, AuditorService auditorService) {
         this.unitsRepository = unitsRepository;
         this.facilitiesRepository = facilitiesRepository;
         this.establishmentsRepository = establishmentsRepository;
+        this.auditorService = auditorService;
     }
 
     @Override
     public AdminInformation getAdminInformation() {
         List<AdminReport> adminReports = new ArrayList<>();
         Iterable<Unit> units = unitsRepository.findAll();
+        long facilitiesArrears = 0;
+        long establishmentArrears = 0;
         for (Unit unit : units) {
-            adminReports.add(new AdminReport(unit.getId(), unit.getName(), unit.getBranch(), 0, 0));
+            long debtFacilityRemained = auditorService.facilitiesDebt(unit.getFacilities());
+            long debtEstablishmentRemained = auditorService.establishmentsDebt(unit.getEstablishments());
+            facilitiesArrears += debtFacilityRemained;
+            establishmentArrears += debtEstablishmentRemained;
+            adminReports.add(new AdminReport(unit.getId(), unit.getName(), unit.getBranch(), debtFacilityRemained, debtEstablishmentRemained));
         }
-        return new AdminInformation(unitsRepository.count(), facilitiesRepository.count(), establishmentsRepository.count(), 0, 0, 0, adminReports);
+        return new AdminInformation(unitsRepository.count(), facilitiesRepository.count(), establishmentsRepository.count(), facilitiesArrears + establishmentArrears, establishmentArrears, facilitiesArrears, adminReports);
     }
 }

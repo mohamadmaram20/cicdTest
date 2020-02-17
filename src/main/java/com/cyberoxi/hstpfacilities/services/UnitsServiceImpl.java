@@ -1,11 +1,10 @@
 package com.cyberoxi.hstpfacilities.services;
 
-import com.cyberoxi.hstpfacilities.models.Unit;
-import com.cyberoxi.hstpfacilities.models.Establishment;
 import com.cyberoxi.hstpfacilities.models.Facility;
+import com.cyberoxi.hstpfacilities.models.Unit;
+import com.cyberoxi.hstpfacilities.models.responses.DateNumber;
 import com.cyberoxi.hstpfacilities.models.responses.UnitBrief;
 import com.cyberoxi.hstpfacilities.models.responses.UnitReport;
-import com.cyberoxi.hstpfacilities.models.responses.DateNumber;
 import com.cyberoxi.hstpfacilities.repositories.UnitsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,10 +22,12 @@ import java.util.List;
 public class UnitsServiceImpl implements UnitsService {
 
     private UnitsRepository unitsRepository;
+    private AuditorService auditorService;
 
     @Autowired
-    public UnitsServiceImpl(UnitsRepository unitsRepository) {
+    public UnitsServiceImpl(UnitsRepository unitsRepository, AuditorService auditorService) {
         this.unitsRepository = unitsRepository;
+        this.auditorService = auditorService;
     }
 
     @Override
@@ -62,7 +63,7 @@ public class UnitsServiceImpl implements UnitsService {
 
     @Override
     public UnitReport getUnitReport(long id) {
-        Unit findUnit = unitsRepository.findById(id).get();
+        Unit unit = unitsRepository.findById(id).get();
         // TODO fill fields
         long installmentsNumber = 0; //تعداد اقساط وام
         long loanAmountPerMonth = 0; //مبلغ وام در هر ماه
@@ -71,22 +72,11 @@ public class UnitsServiceImpl implements UnitsService {
         List<DateNumber> debtEstablishmentEachMonth = new ArrayList<>(); //مبلغ بدهی استقرار به تفکیک ماه
         List<DateNumber> facilityPaidEachMonth = new ArrayList<>(); //مبلغ پرداختی تسهیلات به تفکیک هر ماه
         List<DateNumber> establishmentPaidEachMonth = new ArrayList<>(); //مبلغ پرداختی استقرار به تفکیک هر ماه
-        long totalFacilityAmountPaid = 0; //کل مبلغ پرداختی تسهیلات
-        long totalEstablishmentAmountPaid = 0; //کل مبلغ پرداختی استقرار
-        long debtFacilityRemained = 0; //مانده بدهی تسهیلات
-        long debtEstablishmentRemained = 0; //مانده بدهی استقرار
 
-        for (Facility facility : findUnit.getFacilities()) {
+        for (Facility facility : unit.getFacilities()) {
             installmentsNumber = installmentsNumber + facility.getRepaymentMonthsNumber();
             loanAmountPerMonth = loanAmountPerMonth + facility.getInstallmentsRepaymentAmount();
             debtInstallmentsArrears = debtInstallmentsArrears + facility.getInstallmentsRepaymentAmount();
-
-            totalFacilityAmountPaid = totalFacilityAmountPaid + facility.getApprovedAmount();
-            debtFacilityRemained = debtFacilityRemained + facility.getApprovedAmount();
-        }
-        for (Establishment establishment : findUnit.getEstablishments()) {
-            totalEstablishmentAmountPaid = totalEstablishmentAmountPaid + establishment.getFinalContractMonthlyAmount();
-            debtEstablishmentRemained = debtEstablishmentRemained + establishment.getFinalContractMonthlyAmount();
         }
 
         debtEstablishmentEachYear.add(new DateNumber("1396", 0));
@@ -113,9 +103,9 @@ public class UnitsServiceImpl implements UnitsService {
                 debtEstablishmentEachMonth,
                 /*facilityPaidEachMonth*/debtEstablishmentEachMonth,
                 /*establishmentPaidEachMonth*/debtEstablishmentEachMonth,
-                totalFacilityAmountPaid,
-                totalEstablishmentAmountPaid,
-                debtFacilityRemained,
-                debtEstablishmentRemained);
+                auditorService.facilitiesPaid(unit.getFacilities()),
+                auditorService.establishmentsPaid(unit.getEstablishments()),
+                auditorService.facilitiesDebt(unit.getFacilities()),
+                auditorService.establishmentsDebt(unit.getEstablishments()));
     }
 }

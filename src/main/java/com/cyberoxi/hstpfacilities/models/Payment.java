@@ -33,6 +33,7 @@ public class Payment extends AuditModel {
     @Column(nullable = false, updatable = false)
     private long amount;
 
+    //TODO chang fields
     private byte type; // 1 = pos, 2 = cardToCard, 3 = cash, 4 = internet
     private String referenceId;
 

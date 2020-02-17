@@ -1,6 +1,9 @@
 package com.cyberoxi.hstpfacilities.services;
 
 import com.cyberoxi.hstpfacilities.models.Establishment;
+import com.cyberoxi.hstpfacilities.models.Facility;
+
+import java.util.List;
 
 /**
  * @author Mohammad Mahdi Kahool
@@ -9,7 +12,19 @@ import com.cyberoxi.hstpfacilities.models.Establishment;
  */
 public interface AuditorService {
 
-    long establishmentsDebt(Iterable<Establishment> establishments);
+    long establishmentsDebt(List<Establishment> establishments);
 
     long establishmentDebt(Establishment establishment);
+
+    long establishmentsPaid(List<Establishment> establishments);
+
+    long establishmentPaid(Establishment establishment);
+
+    long facilitiesDebt(List<Facility> facilities);
+
+    long facilityDebt(Facility facility);
+
+    long facilitiesPaid(List<Facility> facilities);
+
+    long facilityPaid(Facility facility);
 }
