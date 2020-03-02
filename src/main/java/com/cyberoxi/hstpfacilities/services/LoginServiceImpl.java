@@ -7,6 +7,7 @@ import com.cyberoxi.hstpfacilities.models.responses.LoginResponse;
 import com.cyberoxi.hstpfacilities.repositories.AdminsRepository;
 import com.cyberoxi.hstpfacilities.repositories.UnitsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -21,15 +22,20 @@ public class LoginServiceImpl implements LoginService {
 
     private AdminsRepository adminsRepository;
     private UnitsRepository unitsRepository;
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Autowired
-    public LoginServiceImpl(AdminsRepository adminsRepository, UnitsRepository unitsRepository) {
+    public LoginServiceImpl(AdminsRepository adminsRepository, UnitsRepository unitsRepository, BCryptPasswordEncoder bCryptPasswordEncoder) {
         this.adminsRepository = adminsRepository;
         this.unitsRepository = unitsRepository;
+        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
     @Override
     public LoginResponse login(String username, String password) {
+        /*Optional<Admin> admin = adminsRepository.findByUsername(username);
+        if (bCryptPasswordEncoder.matches(password , admin.get().getPassword())){}*/
+        // FIXME: 3/2/2020 because of using BCriptPasswordEncoding we can not use this method
         Optional<Admin> admin = adminsRepository.findByUsernameAndPassword(username, password);
         if (admin.isPresent())
             return new LoginResponse(admin.get().getId(), admin.get().getFirstName() + " " + admin.get().getLastName(), 'a', admin.get().getAvatar(), admin.get().getAccessLevel());

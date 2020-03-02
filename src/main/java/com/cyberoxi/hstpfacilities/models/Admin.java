@@ -27,4 +27,6 @@ public class Admin extends AuditModel {
     private String avatar;
 
     private int accessLevel;
+
+    private String role;
 }

@@ -31,5 +31,4 @@ public class LoginWebController {
     public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest) {
         return ResponseEntity.ok(loginService.login(loginRequest.getUsername(), loginRequest.getPassword()));
     }
-
 }

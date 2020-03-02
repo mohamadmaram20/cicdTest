@@ -1,12 +1,15 @@
 package com.cyberoxi.hstpfacilities.services;
 
+import com.cyberoxi.hstpfacilities.models.Admin;
 import com.cyberoxi.hstpfacilities.models.Unit;
 import com.cyberoxi.hstpfacilities.models.responses.AdminInformation;
 import com.cyberoxi.hstpfacilities.models.responses.AdminReport;
+import com.cyberoxi.hstpfacilities.repositories.AdminsRepository;
 import com.cyberoxi.hstpfacilities.repositories.UnitsRepository;
 import com.cyberoxi.hstpfacilities.repositories.EstablishmentsRepository;
 import com.cyberoxi.hstpfacilities.repositories.FacilitiesRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -24,13 +27,17 @@ public class AdminsServiceImpl implements AdminsService {
     private FacilitiesRepository facilitiesRepository;
     private EstablishmentsRepository establishmentsRepository;
     private AuditorService auditorService;
+    private AdminsRepository adminsRepository;
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Autowired
-    public AdminsServiceImpl(UnitsRepository unitsRepository, FacilitiesRepository facilitiesRepository, EstablishmentsRepository establishmentsRepository, AuditorService auditorService) {
+    public AdminsServiceImpl(UnitsRepository unitsRepository, FacilitiesRepository facilitiesRepository, EstablishmentsRepository establishmentsRepository, AuditorService auditorService, AdminsRepository adminsRepository, BCryptPasswordEncoder bCryptPasswordEncoder) {
         this.unitsRepository = unitsRepository;
         this.facilitiesRepository = facilitiesRepository;
         this.establishmentsRepository = establishmentsRepository;
         this.auditorService = auditorService;
+        this.adminsRepository = adminsRepository;
+        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
     @Override
@@ -47,5 +54,11 @@ public class AdminsServiceImpl implements AdminsService {
             adminReports.add(new AdminReport(unit.getId(), unit.getName(), unit.getBranch(), debtFacilityRemained, debtEstablishmentRemained));
         }
         return new AdminInformation(unitsRepository.count(), facilitiesRepository.count(), establishmentsRepository.count(), facilitiesArrears + establishmentArrears, establishmentArrears, facilitiesArrears, adminReports);
+    }
+
+    @Override
+    public Admin save(Admin admin) {
+        admin.setPassword(bCryptPasswordEncoder.encode(admin.getPassword()));
+        return adminsRepository.save(admin);
     }
 }
