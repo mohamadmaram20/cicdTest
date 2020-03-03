@@ -8,7 +8,7 @@ import com.cyberoxi.hstpfacilities.models.Idea;
  * @version 0.0.1
  * @since 1/28/2020
  */
-public interface IdeasService {
+public interface IdeaService {
 
     Iterable<Idea> getIdeas(long unitId);
 

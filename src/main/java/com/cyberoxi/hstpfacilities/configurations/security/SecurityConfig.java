@@ -1,7 +1,7 @@
 package com.cyberoxi.hstpfacilities.configurations.security;
 
 
-import com.cyberoxi.hstpfacilities.repositories.AdminsRepository;
+import com.cyberoxi.hstpfacilities.repositories.AdminRepository;
 import com.cyberoxi.hstpfacilities.services.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
@@ -18,14 +18,14 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    private AdminsRepository adminsRepository;
+    private AdminRepository adminRepository;
     private UserDetailsServiceImpl userDetailsService;
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Autowired
-    public SecurityConfig(AdminsRepository adminsRepository, UserDetailsServiceImpl userDetailsService,
+    public SecurityConfig(AdminRepository adminRepository, UserDetailsServiceImpl userDetailsService,
                           BCryptPasswordEncoder bCryptPasswordEncoder) {
-        this.adminsRepository = adminsRepository;
+        this.adminRepository = adminRepository;
         this.userDetailsService = userDetailsService;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
@@ -40,11 +40,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .addFilter(new JwtAuthenticationFilter(authenticationManager()))
-                .addFilter(new JwtAuthorizationFilter(authenticationManager(), adminsRepository))
+                .addFilter(new JwtAuthorizationFilter(authenticationManager(), adminRepository))
                 .authorizeRequests()
-                .antMatchers("/login", "/" ,"/web/admins/register").permitAll()
+                .antMatchers("/login", "/", "/web/admins/register").permitAll()
                 .antMatchers("/web/admins/**").hasAuthority("ADMIN")
                 .antMatchers("/localManager/**").hasAuthority("MANAGER");
+        http
+                .authorizeRequests()
+                .antMatchers("/swagger-resources/**", "/swagger-ui.html**", "/webjars/**", "/v2/api-docs")
+                .authenticated().and().httpBasic();
         //.anyRequest().authenticated();
     }
 

@@ -3,7 +3,7 @@ package com.cyberoxi.hstpfacilities.services;
 import com.cyberoxi.hstpfacilities.models.Establishment;
 import com.cyberoxi.hstpfacilities.models.Facility;
 import com.cyberoxi.hstpfacilities.models.Payment;
-import com.cyberoxi.hstpfacilities.repositories.PaymentsRepository;
+import com.cyberoxi.hstpfacilities.repositories.PaymentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,11 +19,11 @@ import java.util.List;
 @Service
 public class AuditorServiceImpl implements AuditorService {
 
-    private PaymentsRepository paymentsRepository;
+    private PaymentRepository paymentRepository;
 
     @Autowired
-    public AuditorServiceImpl(PaymentsRepository paymentsRepository) {
-        this.paymentsRepository = paymentsRepository;
+    public AuditorServiceImpl(PaymentRepository paymentRepository) {
+        this.paymentRepository = paymentRepository;
     }
 
     @Override
@@ -56,7 +56,7 @@ public class AuditorServiceImpl implements AuditorService {
     @Override
     public long establishmentPaid(Establishment establishment) {
         int paidAmount = 0;
-        Iterable<Payment> establishmentPayments = paymentsRepository.findAllByContractTypeAndContractIdAndTransactionDateAfter('e', establishment.getId(), establishment.getContractStartDate());
+        Iterable<Payment> establishmentPayments = paymentRepository.findAllByContractTypeAndContractIdAndTransactionDateAfter('e', establishment.getId(), establishment.getContractStartDate());
         for (Payment payment : establishmentPayments)
             paidAmount += payment.getAmount();
         return paidAmount;
@@ -92,7 +92,7 @@ public class AuditorServiceImpl implements AuditorService {
     @Override
     public long facilityPaid(Facility facility) {
         int paidAmount = 0;
-        Iterable<Payment> facilityPayments = paymentsRepository.findAllByContractTypeAndContractIdAndTransactionDateAfter('f', facility.getId(), facility.getInstallmentsStartDate());
+        Iterable<Payment> facilityPayments = paymentRepository.findAllByContractTypeAndContractIdAndTransactionDateAfter('f', facility.getId(), facility.getInstallmentsStartDate());
         for (Payment payment : facilityPayments)
             paidAmount += payment.getAmount();
         return paidAmount;

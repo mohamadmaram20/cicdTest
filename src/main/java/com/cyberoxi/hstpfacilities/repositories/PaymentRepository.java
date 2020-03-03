@@ -12,7 +12,7 @@ import java.util.Date;
  * @since 2/2/2020
  */
 @Repository
-public interface PaymentsRepository extends CrudRepository<Payment, Long> {
+public interface PaymentRepository extends CrudRepository<Payment, Long> {
 
     Iterable<Payment> findAllByUnitId(long unitId);
 

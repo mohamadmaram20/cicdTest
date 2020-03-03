@@ -1,6 +1,6 @@
 package com.cyberoxi.hstpfacilities.repositories;
 
-import com.cyberoxi.hstpfacilities.models.Facility;
+import com.cyberoxi.hstpfacilities.models.Establishment;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
@@ -10,5 +10,5 @@ import org.springframework.stereotype.Repository;
  * @since 1/23/2020
  */
 @Repository
-public interface FacilitiesRepository extends CrudRepository<Facility, Long> {
+public interface EstablishmentRepository extends CrudRepository<Establishment, Long> {
 }

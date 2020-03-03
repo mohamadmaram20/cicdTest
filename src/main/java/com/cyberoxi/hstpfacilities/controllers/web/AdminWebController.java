@@ -1,7 +1,7 @@
 package com.cyberoxi.hstpfacilities.controllers.web;
 
 import com.cyberoxi.hstpfacilities.models.Admin;
-import com.cyberoxi.hstpfacilities.services.AdminsService;
+import com.cyberoxi.hstpfacilities.services.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,23 +15,23 @@ import static com.cyberoxi.hstpfacilities.GlobalVariables.WEB_ROUTE;
  */
 @RestController
 @RequestMapping(WEB_ROUTE + "/admins")
-public class AdminsWebController {
+public class AdminWebController {
 
-    private AdminsService adminsService;
+    private AdminService adminService;
 
     @Autowired
-    public AdminsWebController(AdminsService adminsService) {
-        this.adminsService = adminsService;
+    public AdminWebController(AdminService adminService) {
+        this.adminService = adminService;
     }
 
     @GetMapping("/info")
     public ResponseEntity<?> getAdminInformation() {
-        return ResponseEntity.ok(adminsService.getAdminInformation());
+        return ResponseEntity.ok(adminService.getAdminInformation());
     }
 
     @PostMapping("/register")
     public ResponseEntity<?> adminRegister(@RequestBody Admin admin) {
-        return ResponseEntity.ok(adminsService.save(admin));
+        return ResponseEntity.ok(adminService.save(admin));
     }
 
 }

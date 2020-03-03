@@ -1,7 +1,7 @@
 package com.cyberoxi.hstpfacilities.services;
 
 import com.cyberoxi.hstpfacilities.models.Admin;
-import com.cyberoxi.hstpfacilities.repositories.AdminsRepository;
+import com.cyberoxi.hstpfacilities.repositories.AdminRepository;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -17,15 +17,15 @@ import static java.util.Collections.emptyList;
 
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
-    private AdminsRepository adminsRepository;
+    private AdminRepository adminRepository;
 
-    public UserDetailsServiceImpl(AdminsRepository adminsRepository) {
-        this.adminsRepository = adminsRepository;
+    public UserDetailsServiceImpl(AdminRepository adminRepository) {
+        this.adminRepository = adminRepository;
     }
 
     @Override
     public UserDetails loadUserByUsername(String username) {
-        Admin admin = adminsRepository.findByUsername(username).get();
+        Admin admin = adminRepository.findByUsername(username).get();
         return new User(admin.getUsername(), admin.getPassword(), emptyList());
     }
 }

@@ -8,7 +8,7 @@ import com.cyberoxi.hstpfacilities.models.responses.AdminInformation;
  * @version 0.0.1
  * @since 1/21/20
  */
-public interface AdminsService {
+public interface AdminService {
 
     AdminInformation getAdminInformation();
 

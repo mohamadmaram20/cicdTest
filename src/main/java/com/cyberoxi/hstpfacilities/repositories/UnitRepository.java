@@ -12,7 +12,7 @@ import java.util.Optional;
  * @since 1/22/2020
  */
 @Repository
-public interface UnitsRepository extends CrudRepository<Unit, Long> {
+public interface UnitRepository extends CrudRepository<Unit, Long> {
 
     Optional<Unit> findByUsernameAndPassword(String username, String password);
 }

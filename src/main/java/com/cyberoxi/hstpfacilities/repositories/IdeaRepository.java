@@ -10,5 +10,5 @@ import org.springframework.stereotype.Repository;
  * @since 1/23/2020
  */
 @Repository
-public interface IdeasRepository extends CrudRepository<Idea, Long> {
+public interface IdeaRepository extends CrudRepository<Idea, Long> {
 }

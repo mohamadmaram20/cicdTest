@@ -4,10 +4,10 @@ import com.cyberoxi.hstpfacilities.models.Admin;
 import com.cyberoxi.hstpfacilities.models.Unit;
 import com.cyberoxi.hstpfacilities.models.responses.AdminInformation;
 import com.cyberoxi.hstpfacilities.models.responses.AdminReport;
-import com.cyberoxi.hstpfacilities.repositories.AdminsRepository;
-import com.cyberoxi.hstpfacilities.repositories.UnitsRepository;
-import com.cyberoxi.hstpfacilities.repositories.EstablishmentsRepository;
-import com.cyberoxi.hstpfacilities.repositories.FacilitiesRepository;
+import com.cyberoxi.hstpfacilities.repositories.AdminRepository;
+import com.cyberoxi.hstpfacilities.repositories.UnitRepository;
+import com.cyberoxi.hstpfacilities.repositories.EstablishmentRepository;
+import com.cyberoxi.hstpfacilities.repositories.FacilityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -21,29 +21,29 @@ import java.util.List;
  * @since 1/9/20
  */
 @Service
-public class AdminsServiceImpl implements AdminsService {
+public class AdminServiceImpl implements AdminService {
 
-    private UnitsRepository unitsRepository;
-    private FacilitiesRepository facilitiesRepository;
-    private EstablishmentsRepository establishmentsRepository;
+    private UnitRepository unitRepository;
+    private FacilityRepository facilityRepository;
+    private EstablishmentRepository establishmentRepository;
     private AuditorService auditorService;
-    private AdminsRepository adminsRepository;
+    private AdminRepository adminRepository;
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Autowired
-    public AdminsServiceImpl(UnitsRepository unitsRepository, FacilitiesRepository facilitiesRepository, EstablishmentsRepository establishmentsRepository, AuditorService auditorService, AdminsRepository adminsRepository, BCryptPasswordEncoder bCryptPasswordEncoder) {
-        this.unitsRepository = unitsRepository;
-        this.facilitiesRepository = facilitiesRepository;
-        this.establishmentsRepository = establishmentsRepository;
+    public AdminServiceImpl(UnitRepository unitRepository, FacilityRepository facilityRepository, EstablishmentRepository establishmentRepository, AuditorService auditorService, AdminRepository adminRepository, BCryptPasswordEncoder bCryptPasswordEncoder) {
+        this.unitRepository = unitRepository;
+        this.facilityRepository = facilityRepository;
+        this.establishmentRepository = establishmentRepository;
         this.auditorService = auditorService;
-        this.adminsRepository = adminsRepository;
+        this.adminRepository = adminRepository;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
     @Override
     public AdminInformation getAdminInformation() {
         List<AdminReport> adminReports = new ArrayList<>();
-        Iterable<Unit> units = unitsRepository.findAll();
+        Iterable<Unit> units = unitRepository.findAll();
         long facilitiesArrears = 0;
         long establishmentArrears = 0;
         for (Unit unit : units) {
@@ -53,12 +53,12 @@ public class AdminsServiceImpl implements AdminsService {
             establishmentArrears += debtEstablishmentRemained;
             adminReports.add(new AdminReport(unit.getId(), unit.getName(), unit.getBranch(), debtFacilityRemained, debtEstablishmentRemained));
         }
-        return new AdminInformation(unitsRepository.count(), facilitiesRepository.count(), establishmentsRepository.count(), facilitiesArrears + establishmentArrears, establishmentArrears, facilitiesArrears, adminReports);
+        return new AdminInformation(unitRepository.count(), facilityRepository.count(), establishmentRepository.count(), facilitiesArrears + establishmentArrears, establishmentArrears, facilitiesArrears, adminReports);
     }
 
     @Override
     public Admin save(Admin admin) {
         admin.setPassword(bCryptPasswordEncoder.encode(admin.getPassword()));
-        return adminsRepository.save(admin);
+        return adminRepository.save(admin);
     }
 }

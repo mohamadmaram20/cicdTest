@@ -8,7 +8,7 @@ import com.cyberoxi.hstpfacilities.models.Facility;
  * @version 0.0.1
  * @since 1/28/2020
  */
-public interface FacilitiesService {
+public interface FacilityService {
 
     Iterable<Facility> getFacilities(long unitId);
 

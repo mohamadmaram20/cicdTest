@@ -1,7 +1,7 @@
 package com.cyberoxi.hstpfacilities.controllers.web;
 
 import com.cyberoxi.hstpfacilities.models.Idea;
-import com.cyberoxi.hstpfacilities.services.IdeasService;
+import com.cyberoxi.hstpfacilities.services.IdeaService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -17,37 +17,37 @@ import static com.cyberoxi.hstpfacilities.GlobalVariables.WEB_ROUTE;
  */
 @RestController
 @RequestMapping(WEB_ROUTE + "/ideas")
-public class IdeasWebController {
+public class IdeaWebController {
 
-    private IdeasService ideasService;
+    private IdeaService ideaService;
 
     @Autowired
-    public IdeasWebController(IdeasService ideasService) {
-        this.ideasService = ideasService;
+    public IdeaWebController(IdeaService ideaService) {
+        this.ideaService = ideaService;
     }
 
     @GetMapping("/unit/{unitId}")
     @ApiOperation(value = "GetIdeas", notes = "Get all ideas of a unit")
     public ResponseEntity<?> getIdeas(@PathVariable long unitId) {
-        return ResponseEntity.ok(ideasService.getIdeas(unitId));
+        return ResponseEntity.ok(ideaService.getIdeas(unitId));
     }
 
     @GetMapping("/{id}")
     @ApiOperation(value = "GetIdea", notes = "Get a idea by id")
     public ResponseEntity<?> getIdea(@PathVariable long id) {
-        return ResponseEntity.ok(ideasService.getIdea(id));
+        return ResponseEntity.ok(ideaService.getIdea(id));
     }
 
     @PostMapping("/unit/{unitId}")
     @ApiOperation(value = "AddIdea", notes = "Add a idea to a unit")
     public ResponseEntity<?> addIdea(@PathVariable long unitId, @RequestBody Idea idea) {
-        return ResponseEntity.ok(ideasService.addIdea(unitId, idea));
+        return ResponseEntity.ok(ideaService.addIdea(unitId, idea));
     }
 
     @PostMapping("/{id}")
     @ApiOperation(value = "UpdateIdea", notes = "Update a idea by id")
     public ResponseEntity<?> updateIdea(@PathVariable long id, @RequestBody Idea idea) {
-        return ResponseEntity.ok(ideasService.updateIdea(id, idea));
+        return ResponseEntity.ok(ideaService.updateIdea(id, idea));
     }
 
     @GetMapping("/fields")

@@ -9,7 +9,7 @@ import com.cyberoxi.hstpfacilities.models.responses.UnitReport;
  * @version 0.0.1
  * @since 1/22/2020
  */
-public interface UnitsService {
+public interface UnitService {
 
     Iterable<Unit> getUnits();
 

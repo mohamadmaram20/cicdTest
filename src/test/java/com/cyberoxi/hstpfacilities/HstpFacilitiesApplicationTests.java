@@ -1,22 +1,10 @@
 package com.cyberoxi.hstpfacilities;
 
-import com.cyberoxi.hstpfacilities.models.Establishment;
-import com.cyberoxi.hstpfacilities.models.Payment;
-import com.cyberoxi.hstpfacilities.services.EstablishmentsService;
-import com.cyberoxi.hstpfacilities.services.PaymentsService;
-import com.google.common.collect.Lists;
+import com.cyberoxi.hstpfacilities.services.EstablishmentService;
+import com.cyberoxi.hstpfacilities.services.PaymentService;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.Period;
-import java.util.Date;
-
-import com.cyberoxi.hstpfacilities.models.Person;
-
-import com.cyberoxi.hstpfacilities.models.Unit;
 import com.cyberoxi.hstpfacilities.services.AuditorService;
-import com.cyberoxi.hstpfacilities.services.UnitsService;
+import com.cyberoxi.hstpfacilities.services.UnitService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -26,16 +14,16 @@ import static org.assertj.core.api.Assertions.assertThat;
 @SpringBootTest
 class HstpFacilitiesApplicationTests {
 
-    private UnitsService unitsService;
-    private EstablishmentsService establishmentsService;
-    private PaymentsService paymentsService;
+    private UnitService unitService;
+    private EstablishmentService establishmentService;
+    private PaymentService paymentService;
     private AuditorService auditorService;
 
     @Autowired
-    public HstpFacilitiesApplicationTests(UnitsService unitsService, EstablishmentsService establishmentsService, PaymentsService paymentsService, AuditorService auditorService) {
-        this.unitsService = unitsService;
-        this.establishmentsService = establishmentsService;
-        this.paymentsService = paymentsService;
+    public HstpFacilitiesApplicationTests(UnitService unitService, EstablishmentService establishmentService, PaymentService paymentService, AuditorService auditorService) {
+        this.unitService = unitService;
+        this.establishmentService = establishmentService;
+        this.paymentService = paymentService;
         this.auditorService = auditorService;
     }
 
@@ -80,7 +68,7 @@ class HstpFacilitiesApplicationTests {
         unit.setReceptionDates(Lists.newArrayList());
         unit.setIdeas(Lists.newArrayList());
 
-        Unit unitSaved = unitsService.saveUnit(unit);
+        Unit unitSaved = unitService.saveUnit(unit);
 
         Payment payment = new Payment();
         payment.setTransactionDate(new SimpleDateFormat("yyyy-MM-dd").parse("2019-12-15"));
@@ -92,12 +80,12 @@ class HstpFacilitiesApplicationTests {
         payment.setUnitId(unitSaved.getId());
         payment.setTrackingCode("");
 
-        paymentsService.savePayment(payment);
+        paymentService.savePayment(payment);
     }
 
     @Test
     void auditor() {
-        assertThat(auditorService.establishmentDebt(establishmentsService.getEstablishment(24))).isEqualTo(700000000);
+        assertThat(auditorService.establishmentDebt(establishmentService.getEstablishment(24))).isEqualTo(700000000);
     }*/
 
 }

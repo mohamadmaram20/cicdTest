@@ -5,7 +5,7 @@ import com.cyberoxi.hstpfacilities.models.Unit;
 import com.cyberoxi.hstpfacilities.models.responses.DateNumber;
 import com.cyberoxi.hstpfacilities.models.responses.UnitBrief;
 import com.cyberoxi.hstpfacilities.models.responses.UnitReport;
-import com.cyberoxi.hstpfacilities.repositories.UnitsRepository;
+import com.cyberoxi.hstpfacilities.repositories.UnitRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,26 +19,26 @@ import java.util.List;
  * @since 1/22/2020
  */
 @Service
-public class UnitsServiceImpl implements UnitsService {
+public class UnitServiceImpl implements UnitService {
 
-    private UnitsRepository unitsRepository;
+    private UnitRepository unitRepository;
     private AuditorService auditorService;
 
     @Autowired
-    public UnitsServiceImpl(UnitsRepository unitsRepository, AuditorService auditorService) {
-        this.unitsRepository = unitsRepository;
+    public UnitServiceImpl(UnitRepository unitRepository, AuditorService auditorService) {
+        this.unitRepository = unitRepository;
         this.auditorService = auditorService;
     }
 
     @Override
     public Iterable<Unit> getUnits() {
-        return unitsRepository.findAll();
+        return unitRepository.findAll();
     }
 
     @Override
     public Iterable<UnitBrief> getUnitsBrief() {
         List<UnitBrief> unitsBrief = new ArrayList<>();
-        unitsRepository.findAll().forEach(unit -> {
+        unitRepository.findAll().forEach(unit -> {
             unitsBrief.add(new UnitBrief(unit.getId(), unit.getName(), unit.getRegistrationNumber(), unit.getNationalId()));
         });
         return unitsBrief;
@@ -46,24 +46,24 @@ public class UnitsServiceImpl implements UnitsService {
 
     @Override
     public Unit getUnit(long id) {
-        return unitsRepository.findById(id).get();
+        return unitRepository.findById(id).get();
     }
 
     @Override
     public Unit saveUnit(Unit unit) {
-        return unitsRepository.save(unit);
+        return unitRepository.save(unit);
     }
 
     @Override
     public Unit updateUnit(long id, Unit unit) {
-        Unit findUnit = unitsRepository.findById(id).get();
+        Unit findUnit = unitRepository.findById(id).get();
         // TODO update fields
-        return unitsRepository.save(findUnit);
+        return unitRepository.save(findUnit);
     }
 
     @Override
     public UnitReport getUnitReport(long id) {
-        Unit unit = unitsRepository.findById(id).get();
+        Unit unit = unitRepository.findById(id).get();
         // TODO fill fields
         long installmentsNumber = 0; //تعداد اقساط وام
         long loanAmountPerMonth = 0; //مبلغ وام در هر ماه
