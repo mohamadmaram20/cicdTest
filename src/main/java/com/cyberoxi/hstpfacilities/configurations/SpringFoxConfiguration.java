@@ -4,6 +4,7 @@ import com.cyberoxi.hstpfacilities.models.*;
 import com.cyberoxi.hstpfacilities.models.responses.AdminReport;
 import com.cyberoxi.hstpfacilities.models.responses.UnitReport;
 import com.fasterxml.classmate.TypeResolver;
+import com.google.common.collect.Lists;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import springfox.documentation.builders.PathSelectors;
@@ -16,6 +17,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 
 /**
  * @author Mohammad Mahdi Kahool
@@ -26,6 +28,8 @@ import java.util.Collections;
 @EnableSwagger2
 public class SpringFoxConfiguration {
 
+    private static final String AUTHORIZATION_HEADER = "Authorization";
+
     @Bean
     public Docket apiDocket(TypeResolver typeResolver) {
         return new Docket(DocumentationType.SWAGGER_2)
@@ -35,8 +39,8 @@ public class SpringFoxConfiguration {
                 .paths(PathSelectors.any())
                 .build()
                 .apiInfo(apiInfo())
-                //.securityContexts(Arrays.asList(actuatorSecurityContext()))
-                //.securitySchemes(Arrays.asList(basicAuthScheme()))
+                .securityContexts(Collections.singletonList(securityContext()))
+                .securitySchemes(Collections.singletonList(apiKey()))
                 .additionalModels(
                         typeResolver.resolve(Admin.class),
                         typeResolver.resolve(Unit.class),
@@ -52,23 +56,25 @@ public class SpringFoxConfiguration {
     }
 
 
-
-    /*private SecurityContext actuatorSecurityContext() {
+    private SecurityContext securityContext() {
         return SecurityContext.builder()
-                .securityReferences(Arrays.asList(basicAuthReference()))
-                .forPaths(PathSelectors.ant("/actuator/**"))
+                .securityReferences(defaultAuth())
+                .forPaths(PathSelectors.any())
                 .build();
     }
 
-    private SecurityScheme basicAuthScheme() {
-        return new BasicAuth("basicAuth");
+    private List<SecurityReference> defaultAuth() {
+        AuthorizationScope authorizationScope
+                = new AuthorizationScope("global", "accessEverything");
+        AuthorizationScope[] authorizationScopes = new AuthorizationScope[1];
+        authorizationScopes[0] = authorizationScope;
+        return Lists.newArrayList(
+                new SecurityReference("JWT", authorizationScopes));
     }
 
-    private SecurityReference basicAuthReference() {
-        return new SecurityReference("basicAuth", new AuthorizationScope[0]);
-    }*/
-
-
+    private ApiKey apiKey() {
+        return new ApiKey("JWT", AUTHORIZATION_HEADER, "header");
+    }
 
     private ApiInfo apiInfo() {
         return new ApiInfo(

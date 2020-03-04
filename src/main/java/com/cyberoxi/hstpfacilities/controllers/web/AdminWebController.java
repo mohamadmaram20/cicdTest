@@ -1,7 +1,9 @@
 package com.cyberoxi.hstpfacilities.controllers.web;
 
 import com.cyberoxi.hstpfacilities.models.Admin;
+import com.cyberoxi.hstpfacilities.models.requests.LoginRequest;
 import com.cyberoxi.hstpfacilities.services.AdminService;
+import com.cyberoxi.hstpfacilities.services.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -33,5 +35,4 @@ public class AdminWebController {
     public ResponseEntity<?> adminRegister(@RequestBody Admin admin) {
         return ResponseEntity.ok(adminService.save(admin));
     }
-
 }

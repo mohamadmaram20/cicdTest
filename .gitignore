@@ -31,6 +31,7 @@ build/
 .vscode/
 
 *.log
+*.p12
 /static/
 
 .DS_Store

@@ -1,9 +1,6 @@
 package com.cyberoxi.hstpfacilities.controllers.web;
 
 import com.cyberoxi.hstpfacilities.models.requests.LoginRequest;
-import com.cyberoxi.hstpfacilities.services.LoginService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,15 +17,8 @@ import static com.cyberoxi.hstpfacilities.GlobalVariables.WEB_ROUTE;
 @RequestMapping(WEB_ROUTE + "/login")
 public class LoginWebController {
 
-    private LoginService loginService;
-
-    @Autowired
-    public LoginWebController(LoginService loginService) {
-        this.loginService = loginService;
-    }
-
-    @PostMapping()
-    public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest) {
-        return ResponseEntity.ok(loginService.login(loginRequest.getUsername(), loginRequest.getPassword()));
+    @PostMapping
+    public void login(@RequestBody LoginRequest loginRequest) {
+        System.out.println(loginRequest.toString());
     }
 }
