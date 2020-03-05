@@ -42,7 +42,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
             return authenticationManager.authenticate(usernamePasswordAuthenticationToken);
         } catch (IOException e) {
             // TODO: 3/2/2020 handle this exception in ControllerAdvice
-            throw new BadCredentialsException("wrong username or password");
+            throw new BadCredentialsException("Wrong username or password");
         }
     }
 

@@ -14,9 +14,8 @@ import org.springframework.stereotype.Component;
  * @since 3/3/2020
  */
 @Component
-public class UnitCreationToUnit implements Converter<UnitCreation , Unit> {
+public class UnitCreationToUnit implements Converter<UnitCreation, Unit> {
 
-    @SneakyThrows
     @Synchronized
     @Nullable
     @Override
