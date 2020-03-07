@@ -17,8 +17,8 @@ import static com.cyberoxi.hstpfacilities.GlobalVariables.WEB_ROUTE;
 @RequestMapping(WEB_ROUTE + "/login")
 public class LoginWebController {
 
-    @PostMapping
+    /*@PostMapping
     public void login(@RequestBody LoginRequest loginRequest) {
         System.out.println(loginRequest.toString());
-    }
+    }*/
 }
