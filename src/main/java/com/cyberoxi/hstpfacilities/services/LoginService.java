@@ -10,4 +10,6 @@ import com.cyberoxi.hstpfacilities.models.responses.LoginResponse;
 public interface LoginService {
 
     LoginResponse login(String username, String password);
+
+    LoginResponse login(String username);
 }

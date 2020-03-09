@@ -2,6 +2,7 @@ package com.cyberoxi.hstpfacilities.configurations.security;
 
 
 import com.cyberoxi.hstpfacilities.repositories.AdminRepository;
+import com.cyberoxi.hstpfacilities.services.LoginService;
 import com.cyberoxi.hstpfacilities.services.UserDetailsServiceImpl;
 import com.google.common.collect.ImmutableList;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,13 +27,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private AdminRepository adminRepository;
     private UserDetailsServiceImpl userDetailsService;
     private BCryptPasswordEncoder bCryptPasswordEncoder;
+    private LoginService loginService;
 
     @Autowired
     public SecurityConfig(AdminRepository adminRepository, UserDetailsServiceImpl userDetailsService,
-                          BCryptPasswordEncoder bCryptPasswordEncoder) {
+                          BCryptPasswordEncoder bCryptPasswordEncoder, LoginService loginService) {
         this.adminRepository = adminRepository;
         this.userDetailsService = userDetailsService;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+        this.loginService = loginService;
     }
 
     /**
@@ -46,7 +49,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .csrf().disable()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
-                .addFilter(new JwtAuthenticationFilter(authenticationManager()))
+                //.addFilterBefore(new CorsFilter(), ChannelProcessingFilter.class)
+                .addFilter(new JwtAuthenticationFilter(authenticationManager(), loginService))
                 .addFilter(new JwtAuthorizationFilter(authenticationManager(), adminRepository))
                 .addFilter(jwtAuthorizationFilter())
                 .authorizeRequests()
@@ -66,7 +70,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     private JwtAuthenticationFilter jwtAuthorizationFilter() throws Exception {
-        JwtAuthenticationFilter jwtAuthenticationFilter = new JwtAuthenticationFilter(authenticationManager());
+        JwtAuthenticationFilter jwtAuthenticationFilter = new JwtAuthenticationFilter(authenticationManager(), loginService);
         jwtAuthenticationFilter.setFilterProcessesUrl("/web/login");
         return jwtAuthenticationFilter;
     }

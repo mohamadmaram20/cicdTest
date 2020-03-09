@@ -44,4 +44,16 @@ public class LoginServiceImpl implements LoginService {
             return new LoginResponse(unit.get().getId(), unit.get().getName(), 'c', unit.get().getAvatar(), 0);
         throw new NotAcceptableException("Username or password incorrect");
     }
+
+    @Override
+    public LoginResponse login(String username) {
+        Optional<Admin> admin = adminRepository.findByUsername(username);
+        if (admin.isPresent())
+            return new LoginResponse(admin.get().getId(), admin.get().getFirstName() + " " + admin.get().getLastName(), 'a', admin.get().getAvatar(), admin.get().getAccessLevel());
+        Optional<Unit> unit = unitRepository.findByUsername(username);
+        if (unit.isPresent())
+            return new LoginResponse(unit.get().getId(), unit.get().getName(), 'c', unit.get().getAvatar(), 0);
+        throw new NotAcceptableException("Username or password incorrect");
+    }
+
 }

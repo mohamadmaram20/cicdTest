@@ -3,7 +3,10 @@ package com.cyberoxi.hstpfacilities.configurations.security;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.cyberoxi.hstpfacilities.models.requests.LoginRequest;
+import com.cyberoxi.hstpfacilities.models.responses.LoginResponse;
+import com.cyberoxi.hstpfacilities.services.LoginService;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectWriter;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -27,9 +30,11 @@ import java.util.Date;
 public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
     private AuthenticationManager authenticationManager;
+    private LoginService loginService;
 
-    JwtAuthenticationFilter(AuthenticationManager authenticationManager) {
+    JwtAuthenticationFilter(AuthenticationManager authenticationManager, LoginService loginService) {
         this.authenticationManager = authenticationManager;
+        this.loginService = loginService;
     }
 
     @Override
@@ -47,11 +52,22 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     }
 
     @Override
-    protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) {
+    protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) throws IOException {
         String token = JWT.create()
                 .withSubject(((User) authResult.getPrincipal()).getUsername())
                 .withExpiresAt(new Date(System.currentTimeMillis() + JwtProperties.EXPIRATION_TIME))
                 .sign(Algorithm.HMAC512(JwtProperties.SECRET.getBytes()));
         response.addHeader(JwtProperties.HEADER_STRING, JwtProperties.TOKEN_PREFIX + token);
+
+        LoginResponse loginResponse = loginService.login(((User) authResult.getPrincipal()).getUsername());
+        ObjectWriter objectWriter = new ObjectMapper().writer().withDefaultPrettyPrinter();
+        String jsonResponseString = objectWriter.writeValueAsString(loginResponse);
+
+        response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
+        response.setStatus(HttpServletResponse.SC_OK);
+        response.getWriter().write(jsonResponseString);
+        response.getWriter().flush();
+        response.getWriter().close();
     }
 }
