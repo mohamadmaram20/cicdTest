@@ -17,8 +17,10 @@ import static com.cyberoxi.hstpfacilities.GlobalVariables.WEB_ROUTE;
 @RequestMapping(WEB_ROUTE + "/login")
 public class LoginWebController {
 
-    /*@PostMapping
+    /**
+     * this function use just for show url in swagger
+     */
+    @PostMapping
     public void login(@RequestBody LoginRequest loginRequest) {
-        System.out.println(loginRequest.toString());
-    }*/
+    }
 }
