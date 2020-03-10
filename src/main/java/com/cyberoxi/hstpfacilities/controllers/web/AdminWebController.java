@@ -1,11 +1,10 @@
 package com.cyberoxi.hstpfacilities.controllers.web;
 
-import com.cyberoxi.hstpfacilities.models.Admin;
-import com.cyberoxi.hstpfacilities.models.requests.LoginRequest;
+import com.cyberoxi.hstpfacilities.models.User;
 import com.cyberoxi.hstpfacilities.services.AdminService;
-import com.cyberoxi.hstpfacilities.services.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import static com.cyberoxi.hstpfacilities.GlobalVariables.WEB_ROUTE;
@@ -32,7 +31,7 @@ public class AdminWebController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<?> adminRegister(@RequestBody Admin admin) {
-        return ResponseEntity.ok(adminService.save(admin));
+    public ResponseEntity<?> adminRegister(@RequestBody User user) {
+        return ResponseEntity.ok(adminService.save(user));
     }
 }

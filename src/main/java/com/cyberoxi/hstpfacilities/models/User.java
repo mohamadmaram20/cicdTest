@@ -2,8 +2,11 @@ package com.cyberoxi.hstpfacilities.models;
 
 import com.cyberoxi.hstpfacilities.models.audits.AuditModel;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 /**
@@ -11,22 +14,17 @@ import javax.persistence.Table;
  * @version 0.0.1
  * @since 1/21/20
  */
+@EqualsAndHashCode(callSuper = true)
 @Entity
-@Table(name = "admins")
+@Table(name = "users")
 @Data
-public class Admin extends AuditModel {
+public class User extends AuditModel {
 
     private String firstName;
     private String lastName;
     private String email;
-    private String username;
-
-    //@JsonIgnore
-    private String password;
-
     private String avatar;
 
-    private int accessLevel;
-
-    private String role;
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+    private Credential credential = new Credential();
 }

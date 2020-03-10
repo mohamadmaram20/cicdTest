@@ -45,8 +45,8 @@ public class UnitControllerTest extends AbstractControllersTest {
     @Ignore
     public void createUnit() throws Exception {
         Unit unit = new Unit();
-        unit.setUsername("14005685905");
-        unit.setPassword("4052039051");
+        unit.getCredential().setUsername("14005685905");
+        unit.getCredential().setPassword("4052039051");
         unit.setRegistrationDate(new Date());
         unit.setName("آترین آذین فن\u200Cآور");
         unit.setType((byte) 2);

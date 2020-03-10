@@ -1,13 +1,11 @@
 package com.cyberoxi.hstpfacilities.services;
 
-import com.cyberoxi.hstpfacilities.models.Admin;
+import com.cyberoxi.hstpfacilities.models.User;
+import com.cyberoxi.hstpfacilities.models.Credential;
 import com.cyberoxi.hstpfacilities.models.Unit;
 import com.cyberoxi.hstpfacilities.models.responses.AdminInformation;
 import com.cyberoxi.hstpfacilities.models.responses.AdminReport;
-import com.cyberoxi.hstpfacilities.repositories.AdminRepository;
-import com.cyberoxi.hstpfacilities.repositories.UnitRepository;
-import com.cyberoxi.hstpfacilities.repositories.EstablishmentRepository;
-import com.cyberoxi.hstpfacilities.repositories.FacilityRepository;
+import com.cyberoxi.hstpfacilities.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -27,16 +25,18 @@ public class AdminServiceImpl implements AdminService {
     private FacilityRepository facilityRepository;
     private EstablishmentRepository establishmentRepository;
     private AuditorService auditorService;
-    private AdminRepository adminRepository;
+    private UserRepository userRepository;
+    private CredentialRepository credentialRepository;
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Autowired
-    public AdminServiceImpl(UnitRepository unitRepository, FacilityRepository facilityRepository, EstablishmentRepository establishmentRepository, AuditorService auditorService, AdminRepository adminRepository, BCryptPasswordEncoder bCryptPasswordEncoder) {
+    public AdminServiceImpl(UnitRepository unitRepository, FacilityRepository facilityRepository, EstablishmentRepository establishmentRepository, AuditorService auditorService, UserRepository userRepository, CredentialRepository credentialRepository, BCryptPasswordEncoder bCryptPasswordEncoder) {
         this.unitRepository = unitRepository;
         this.facilityRepository = facilityRepository;
         this.establishmentRepository = establishmentRepository;
         this.auditorService = auditorService;
-        this.adminRepository = adminRepository;
+        this.userRepository = userRepository;
+        this.credentialRepository = credentialRepository;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
@@ -57,8 +57,11 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public Admin save(Admin admin) {
-        admin.setPassword(bCryptPasswordEncoder.encode(admin.getPassword()));
-        return adminRepository.save(admin);
+    public User save(User user) {
+        Credential credential = user.getCredential();
+        credential.setPassword(bCryptPasswordEncoder.encode(credential.getPassword()));
+        Credential savedCredential = credentialRepository.save(credential);
+        user.setCredential(savedCredential);
+        return userRepository.save(user);
     }
 }

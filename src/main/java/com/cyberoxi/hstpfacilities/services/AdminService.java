@@ -1,6 +1,6 @@
 package com.cyberoxi.hstpfacilities.services;
 
-import com.cyberoxi.hstpfacilities.models.Admin;
+import com.cyberoxi.hstpfacilities.models.User;
 import com.cyberoxi.hstpfacilities.models.responses.AdminInformation;
 
 /**
@@ -12,5 +12,5 @@ public interface AdminService {
 
     AdminInformation getAdminInformation();
 
-    Admin save(Admin admin);
+    User save(User user);
 }

@@ -1,5 +1,6 @@
 package com.cyberoxi.hstpfacilities.models.responses;
 
+import com.cyberoxi.hstpfacilities.models.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -16,5 +17,5 @@ public class LoginResponse {
     private String name;
     private char type;
     private String avatar;
-    private int accessLevel;
+    private AccessLevel accessLevel;
 }

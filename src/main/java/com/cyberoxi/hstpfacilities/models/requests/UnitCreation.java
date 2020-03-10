@@ -1,5 +1,6 @@
 package com.cyberoxi.hstpfacilities.models.requests;
 
+import com.cyberoxi.hstpfacilities.models.Credential;
 import com.cyberoxi.hstpfacilities.models.Person;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
@@ -17,7 +18,7 @@ import java.util.Date;
  */
 @Data
 public class UnitCreation {
-    @NotBlank
+    /*@NotBlank
     @NotNull
     @Column(nullable = false, unique = true)
     private String username;
@@ -26,6 +27,9 @@ public class UnitCreation {
     @NotNull
     @Column(nullable = false)
     private String password;
+    private String role;*/
+
+    private Credential credential;
 
     @Temporal(TemporalType.DATE)
     @JsonFormat(pattern = "yyyy-MM-dd")
@@ -40,7 +44,7 @@ public class UnitCreation {
     private String registrationNumber;
     private String nationalId;
 
-    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+    //@OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     private Person person;
 
     private String phoneNumber;

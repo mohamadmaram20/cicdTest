@@ -41,9 +41,9 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
 
         try {
-            LoginRequest loginModel = new ObjectMapper().readValue(request.getInputStream(), LoginRequest.class);
+            LoginRequest loginRequest = new ObjectMapper().readValue(request.getInputStream(), LoginRequest.class);
             UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken =
-                    new UsernamePasswordAuthenticationToken(loginModel.getUsername(), loginModel.getPassword(), new ArrayList<>());
+                    new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword(), new ArrayList<>());
             return authenticationManager.authenticate(usernamePasswordAuthenticationToken);
         } catch (IOException e) {
             // TODO: 3/2/2020 handle this exception in ControllerAdvice
@@ -59,7 +59,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
                 .sign(Algorithm.HMAC512(JwtProperties.SECRET.getBytes()));
         response.addHeader(JwtProperties.HEADER_STRING, JwtProperties.TOKEN_PREFIX + token);
 
-        LoginResponse loginResponse = loginService.login(((User) authResult.getPrincipal()).getUsername());
+        LoginResponse loginResponse = loginService.loginByUsernameAndRole(((User) authResult.getPrincipal()).getUsername(), ((User) authResult.getPrincipal()).getAuthorities().iterator().next().getAuthority());
         ObjectWriter objectWriter = new ObjectMapper().writer().withDefaultPrettyPrinter();
         String jsonResponseString = objectWriter.writeValueAsString(loginResponse);
 

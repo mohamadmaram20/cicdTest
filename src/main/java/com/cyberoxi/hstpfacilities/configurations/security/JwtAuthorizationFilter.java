@@ -2,8 +2,8 @@ package com.cyberoxi.hstpfacilities.configurations.security;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
-import com.cyberoxi.hstpfacilities.models.Admin;
-import com.cyberoxi.hstpfacilities.repositories.AdminRepository;
+import com.cyberoxi.hstpfacilities.models.Credential;
+import com.cyberoxi.hstpfacilities.repositories.CredentialRepository;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -25,11 +25,11 @@ import java.util.Collections;
  */
 public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
 
-    private AdminRepository adminRepository;
+    private CredentialRepository credentialRepository;
 
-    JwtAuthorizationFilter(AuthenticationManager authenticationManager, AdminRepository adminRepository) {
+    JwtAuthorizationFilter(AuthenticationManager authenticationManager, CredentialRepository credentialRepository) {
         super(authenticationManager);
-        this.adminRepository = adminRepository;
+        this.credentialRepository = credentialRepository;
     }
 
     @Override
@@ -52,10 +52,10 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
                     .verify(token.replace(JwtProperties.TOKEN_PREFIX, ""))
                     .getSubject();
             if (username != null) {
-                Admin admin = adminRepository.findByUsername(username).get();
+                Credential credential = credentialRepository.findByUsername(username).get();
                 return new UsernamePasswordAuthenticationToken(
                         username, null, Collections.singleton(
-                        new SimpleGrantedAuthority(admin.getRole())));
+                        new SimpleGrantedAuthority(credential.getRole())));
             }
             return null;
         }

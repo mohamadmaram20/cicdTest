@@ -1,16 +1,16 @@
 package com.cyberoxi.hstpfacilities.services;
 
 import com.cyberoxi.hstpfacilities.exceptions.BadRequestException;
-import com.cyberoxi.hstpfacilities.models.Admin;
-import com.cyberoxi.hstpfacilities.models.Unit;
-import com.cyberoxi.hstpfacilities.repositories.AdminRepository;
+import com.cyberoxi.hstpfacilities.models.Credential;
+import com.cyberoxi.hstpfacilities.repositories.CredentialRepository;
+import com.cyberoxi.hstpfacilities.repositories.UserRepository;
 import com.cyberoxi.hstpfacilities.repositories.UnitRepository;
-import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
 
-import static java.util.Collections.emptyList;
+import java.util.Collections;
 
 /**
  * @author Mohamad Zarei Maram
@@ -21,30 +21,35 @@ import static java.util.Collections.emptyList;
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
 
-    private AdminRepository adminRepository;
-    private UnitRepository unitRepository;
+    private CredentialRepository credentialRepository;
 
-    public UserDetailsServiceImpl(AdminRepository adminRepository, UnitRepository unitRepository) {
-        this.adminRepository = adminRepository;
-        this.unitRepository = unitRepository;
+    public UserDetailsServiceImpl(CredentialRepository credentialRepository) {
+        this.credentialRepository = credentialRepository;
     }
 
     /*@Override
     public UserDetails loadUserByUsername(String username) {
-        Admin admin = adminRepository.findByUsername(username).orElseThrow(() -> new BadRequestException("Username or password is wrong"));
-        return new User(admin.getUsername(), admin.getPassword(), emptyList());
+        User admin = adminRepository.findByUsername(username).orElseThrow(() -> new BadRequestException("Username or password is wrong"));
+        return new Credential(admin.getUsername(), admin.getPassword(), emptyList());
     }*/
 
     @Override
     public UserDetails loadUserByUsername(String username) {
-        if (adminRepository.findByUsername(username).isPresent()) {
-            Admin admin = adminRepository.findByUsername(username).get();
-            return new User(admin.getUsername(), admin.getPassword(), emptyList());
-        } else if (unitRepository.findByUsername(username).isPresent()) {
-            Unit unit = unitRepository.findByUsername(username).get();
-            return new User(unit.getUsername(), unit.getPassword(), emptyList());
+
+        if (credentialRepository.findByUsername(username).isPresent()) {
+            Credential credential = credentialRepository.findByUsername(username).get();
+            return new org.springframework.security.core.userdetails.User(credential.getUsername(), credential.getPassword(), Collections.singleton(new SimpleGrantedAuthority(credential.getRole())));
+        } else
+            throw new BadRequestException("Username or password is wrong");
+
+        /*if (userRepository.findByCredential_Username(username).isPresent()) {
+            User user = userRepository.findByCredential_Username(username).get();
+            return new org.springframework.security.core.userdetails.User(user.getCredential().getUsername(), user.getCredential().getPassword(),);
+        } else if (unitRepository.findByCredential_Username(username).isPresent()) {
+            Unit unit = unitRepository.findByCredential_Username(username).get();
+            return new org.springframework.security.core.userdetails.User(unit.getCredential().getUsername(), unit.getCredential().getPassword(), emptyList());
         } else {
             throw new BadRequestException("Username or password is wrong");
-        }
+        }*/
     }
 }

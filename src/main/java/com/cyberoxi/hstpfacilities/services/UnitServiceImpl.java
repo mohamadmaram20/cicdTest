@@ -1,12 +1,15 @@
 package com.cyberoxi.hstpfacilities.services;
 
+import com.cyberoxi.hstpfacilities.models.Credential;
 import com.cyberoxi.hstpfacilities.models.Facility;
 import com.cyberoxi.hstpfacilities.models.Unit;
 import com.cyberoxi.hstpfacilities.models.responses.DateNumber;
 import com.cyberoxi.hstpfacilities.models.responses.UnitBrief;
 import com.cyberoxi.hstpfacilities.models.responses.UnitReport;
+import com.cyberoxi.hstpfacilities.repositories.CredentialRepository;
 import com.cyberoxi.hstpfacilities.repositories.UnitRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -23,11 +26,15 @@ public class UnitServiceImpl implements UnitService {
 
     private UnitRepository unitRepository;
     private AuditorService auditorService;
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
+    private CredentialRepository credentialRepository;
 
     @Autowired
-    public UnitServiceImpl(UnitRepository unitRepository, AuditorService auditorService) {
+    public UnitServiceImpl(UnitRepository unitRepository, AuditorService auditorService, BCryptPasswordEncoder bCryptPasswordEncoder, CredentialRepository credentialRepository) {
         this.unitRepository = unitRepository;
         this.auditorService = auditorService;
+        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+        this.credentialRepository = credentialRepository;
     }
 
     @Override
@@ -51,6 +58,10 @@ public class UnitServiceImpl implements UnitService {
 
     @Override
     public Unit saveUnit(Unit unit) {
+        Credential credential = unit.getCredential();
+        credential.setPassword(bCryptPasswordEncoder.encode(credential.getPassword()));
+        Credential savedCredential = credentialRepository.save(credential);
+        unit.setCredential(savedCredential);
         return unitRepository.save(unit);
     }
 

@@ -21,8 +21,9 @@ public class UnitCreationToUnit implements Converter<UnitCreation, Unit> {
     @Override
     public Unit convert(UnitCreation unitCreation) {
         Unit unit = new Unit();
-        unit.setUsername(unitCreation.getUsername());
-        unit.setPassword(unitCreation.getPassword());
+        unit.getCredential().setUsername(unitCreation.getCredential().getUsername());
+        unit.getCredential().setPassword(unitCreation.getCredential().getPassword());
+        unit.getCredential().setRole(unitCreation.getCredential().getRole());
         unit.setRegistrationDate(unitCreation.getRegistrationDate());
         unit.setName(unitCreation.getName());
         unit.setType(unitCreation.getType());

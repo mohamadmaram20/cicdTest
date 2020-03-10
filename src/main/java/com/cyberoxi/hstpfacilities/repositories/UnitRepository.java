@@ -14,7 +14,7 @@ import java.util.Optional;
 @Repository
 public interface UnitRepository extends CrudRepository<Unit, Long> {
 
-    Optional<Unit> findByUsernameAndPassword(String username, String password);
+    Optional<Unit> findByCredential_UsernameAndCredential_Password(String username, String password);
 
-    Optional<Unit> findByUsername(String username);
+    Optional<Unit> findByCredential_Username(String username);
 }

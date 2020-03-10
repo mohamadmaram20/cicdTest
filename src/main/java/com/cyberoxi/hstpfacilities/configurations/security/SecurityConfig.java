@@ -1,13 +1,18 @@
 package com.cyberoxi.hstpfacilities.configurations.security;
 
 
-import com.cyberoxi.hstpfacilities.repositories.AdminRepository;
+import com.cyberoxi.hstpfacilities.components.Accesses;
+import com.cyberoxi.hstpfacilities.models.AccessLevel;
+import com.cyberoxi.hstpfacilities.models.UrlMethod;
+import com.cyberoxi.hstpfacilities.repositories.CredentialRepository;
 import com.cyberoxi.hstpfacilities.services.LoginService;
 import com.cyberoxi.hstpfacilities.services.UserDetailsServiceImpl;
 import com.google.common.collect.ImmutableList;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -19,23 +24,37 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+/**
+ * @author Mohamad Zarei Maram
+ * @author Mohammad Mahdi Kahool
+ * @version 0.0.1
+ * @since 1/30/2020
+ */
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
+@Slf4j
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    private AdminRepository adminRepository;
+    private CredentialRepository credentialRepository;
     private UserDetailsServiceImpl userDetailsService;
     private BCryptPasswordEncoder bCryptPasswordEncoder;
     private LoginService loginService;
+    private Accesses accesses;
 
     @Autowired
-    public SecurityConfig(AdminRepository adminRepository, UserDetailsServiceImpl userDetailsService,
-                          BCryptPasswordEncoder bCryptPasswordEncoder, LoginService loginService) {
-        this.adminRepository = adminRepository;
+    public SecurityConfig(CredentialRepository credentialRepository, UserDetailsServiceImpl userDetailsService,
+                          BCryptPasswordEncoder bCryptPasswordEncoder, LoginService loginService, Accesses accesses) {
+        this.credentialRepository = credentialRepository;
         this.userDetailsService = userDetailsService;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
         this.loginService = loginService;
+        this.accesses = accesses;
     }
 
     /**
@@ -43,7 +62,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
      **/
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-
         http.cors();
         http
                 .csrf().disable()
@@ -51,12 +69,32 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 //.addFilterBefore(new CorsFilter(), ChannelProcessingFilter.class)
                 .addFilter(new JwtAuthenticationFilter(authenticationManager(), loginService))
-                .addFilter(new JwtAuthorizationFilter(authenticationManager(), adminRepository))
+                .addFilter(new JwtAuthorizationFilter(authenticationManager(), credentialRepository))
                 .addFilter(jwtAuthorizationFilter())
                 .authorizeRequests()
-                .antMatchers("/login", "/", "/web/admins/register").permitAll()
-                .antMatchers("/web/admins/info").hasAuthority("ADMIN")
-                .antMatchers("/localManager/**").hasAuthority("MANAGER");
+                .antMatchers("/login", "/", "/web/admins/register").permitAll();
+        //.antMatchers("/web/admins/**").hasAnyAuthority("A1", "A2");
+
+        for (AccessLevel accessLevel : accesses.getAccessLevels()) {
+            Map<String, List<String>> methodUrls = new HashMap<>();
+            for (UrlMethod urlMethod : accessLevel.getUrlMethods()) {
+                for (String method : urlMethod.getMethods()) {
+                    if (methodUrls.containsKey(method)) {
+                        methodUrls.get(method).add(urlMethod.getUrl());
+                        methodUrls.replace(method, methodUrls.get(method));
+                    } else {
+                        methodUrls.put(method, new ArrayList<String>() {{
+                            add(urlMethod.getUrl());
+                        }});
+                    }
+                }
+            }
+            for (Map.Entry<String, List<String>> entry : methodUrls.entrySet()) {
+                http.authorizeRequests().antMatchers(HttpMethod.valueOf(entry.getKey()), entry.getValue().toArray(new String[0])).hasAuthority(accessLevel.getRole());
+                log.info("Role " + accessLevel.getRole() + " and Method " + entry.getKey() + " permit this urls: " + entry.getValue().toString());
+            }
+        }
+
         http
                 .authorizeRequests()
                 // TODO: 3/4/2020 if we want to have basic auth just for first page we have to delete ** from second parameter
@@ -79,7 +117,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public CorsConfigurationSource corsConfigurationSource() {
         final CorsConfiguration configuration = new CorsConfiguration();
         configuration.setAllowedOrigins(ImmutableList.of("*"));
-        configuration.setAllowedMethods(ImmutableList.of("POST"));
+        configuration.setAllowedMethods(ImmutableList.of("GET", "POST", "DELETE"));
         configuration.setAllowCredentials(true);
         configuration.setAllowedHeaders(ImmutableList.of("Authorization", "Cache-Control", "Content-Type"));
         configuration.setExposedHeaders(ImmutableList.of("Authorization"));

@@ -6,8 +6,6 @@ import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -23,7 +21,7 @@ import java.util.List;
 @Data
 public class Unit extends AuditModel {
 
-    @NotBlank
+    /*@NotBlank
     @NotNull
     @Column(nullable = false, unique = true)
     private String username;
@@ -31,7 +29,7 @@ public class Unit extends AuditModel {
     @NotBlank
     @NotNull
     @Column(nullable = false)
-    private String password;
+    private String password;*/
 
     @Temporal(TemporalType.DATE)
     @JsonFormat(pattern = "yyyy-MM-dd")
@@ -55,6 +53,9 @@ public class Unit extends AuditModel {
     private String postalAddress;
     private String email;
     private String avatar;
+
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+    private Credential credential = new Credential();
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Person> signatureOwners = new ArrayList<>();
