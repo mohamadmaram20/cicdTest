@@ -15,7 +15,7 @@ public class LoginResponse {
 
     private long id;
     private String name;
-    private char type;
+    private String type;
     private String avatar;
     private AccessLevel accessLevel;
 }

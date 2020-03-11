@@ -47,16 +47,14 @@ public class LoginServiceImpl implements LoginService {
 
     @Override
     public LoginResponse loginByUsernameAndRole(String username, String role) {
-
-        if (role.startsWith("A")) {
+        if (role.startsWith("A") || role.startsWith("S")) {
             Optional<User> user = userRepository.findByCredential_Username(username);
-            return new LoginResponse(user.get().getId(), user.get().getFirstName() + " " + user.get().getLastName(), 'a', user.get().getAvatar(), accesses.getAccessLevel(user.get().getCredential().getRole()));
+            return new LoginResponse(user.get().getId(), user.get().getFirstName() + " " + user.get().getLastName(), role, user.get().getAvatar(), accesses.getAccessLevel(user.get().getCredential().getRole()));
         } else if (role.startsWith("C")) {
             Optional<Unit> unit = unitRepository.findByCredential_Username(username);
-            return new LoginResponse(unit.get().getId(), unit.get().getName(), 'c', unit.get().getAvatar(), accesses.getAccessLevel(unit.get().getCredential().getRole()));
+            return new LoginResponse(unit.get().getId(), unit.get().getName(), role, unit.get().getAvatar(), accesses.getAccessLevel(unit.get().getCredential().getRole()));
         }
         throw new NotAcceptableException("Username or password incorrect");
-
     }
 
 }

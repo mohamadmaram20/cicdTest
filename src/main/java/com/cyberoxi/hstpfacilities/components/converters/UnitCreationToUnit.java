@@ -23,7 +23,7 @@ public class UnitCreationToUnit implements Converter<UnitCreation, Unit> {
         Unit unit = new Unit();
         unit.getCredential().setUsername(unitCreation.getCredential().getUsername());
         unit.getCredential().setPassword(unitCreation.getCredential().getPassword());
-        unit.getCredential().setRole(unitCreation.getCredential().getRole());
+        unit.getCredential().setRole("C0");
         unit.setRegistrationDate(unitCreation.getRegistrationDate());
         unit.setName(unitCreation.getName());
         unit.setType(unitCreation.getType());

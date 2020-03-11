@@ -1,5 +1,6 @@
 package com.cyberoxi.hstpfacilities.services;
 
+import com.cyberoxi.hstpfacilities.exceptions.BadRequestException;
 import com.cyberoxi.hstpfacilities.models.User;
 import com.cyberoxi.hstpfacilities.models.Credential;
 import com.cyberoxi.hstpfacilities.models.Unit;
@@ -58,6 +59,8 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public User save(User user) {
+        if (!user.getCredential().getRole().startsWith("A"))
+            throw new BadRequestException("Role for user must start with A");
         Credential credential = user.getCredential();
         credential.setPassword(bCryptPasswordEncoder.encode(credential.getPassword()));
         Credential savedCredential = credentialRepository.save(credential);

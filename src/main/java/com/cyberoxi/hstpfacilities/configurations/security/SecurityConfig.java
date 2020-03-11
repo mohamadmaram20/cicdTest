@@ -72,10 +72,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .addFilter(new JwtAuthorizationFilter(authenticationManager(), credentialRepository))
                 .addFilter(jwtAuthorizationFilter())
                 .authorizeRequests()
-                .antMatchers("/login", "/", "/web/admins/register").permitAll();
-        //.antMatchers("/web/admins/**").hasAnyAuthority("A1", "A2");
+                .antMatchers("/login", "/").permitAll()
+                // TODO: 3/11/2020 to add a SUPER ADMIN we need to comment line below
+                .antMatchers("/web/admins/register").hasAuthority("SA")
+                .antMatchers("/mng/**").hasAuthority("SA");
 
-        for (AccessLevel accessLevel : accesses.getAccessLevels()) {
+
+        /*for (AccessLevel accessLevel : accesses.getAccessLevels()) {
             Map<String, List<String>> methodUrls = new HashMap<>();
             for (UrlMethod urlMethod : accessLevel.getUrlMethods()) {
                 for (String method : urlMethod.getMethods()) {
@@ -93,13 +96,48 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 http.authorizeRequests().antMatchers(HttpMethod.valueOf(entry.getKey()), entry.getValue().toArray(new String[0])).hasAuthority(accessLevel.getRole());
                 log.info("Role " + accessLevel.getRole() + " and Method " + entry.getKey() + " permit this urls: " + entry.getValue().toString());
             }
-        }
+        }*/
+
+        http
+                .authorizeRequests()
+                .antMatchers(HttpMethod.GET, "/web/admins/**").hasAnyAuthority("C0", "A0", "A1", "A2")
+                .antMatchers(HttpMethod.POST, "/web/admins/**").hasAuthority("SA")
+
+                .antMatchers(HttpMethod.GET, "/web/establishments/unit/**").hasAnyAuthority("C0","A0", "A1", "A2")
+                .antMatchers(HttpMethod.GET, "/web/establishments/**").hasAnyAuthority("A0", "A1", "A2")
+                .antMatchers(HttpMethod.POST , "/web/establishments/unit/**").hasAnyAuthority("A0" , "A1")
+                .antMatchers(HttpMethod.POST , "/web/establishments/**").hasAnyAuthority("A0")
+
+                .antMatchers(HttpMethod.GET,"/web/facilities/fields").hasAnyAuthority("C0","A0", "A1", "A2")
+                .antMatchers(HttpMethod.GET , "/web/facilities/unit/**").hasAnyAuthority("C0","A0", "A1", "A2")
+                .antMatchers(HttpMethod.GET, "/web/facilities/**").hasAnyAuthority("A0", "A1", "A2")
+                .antMatchers(HttpMethod.POST , "/web/facilities/unit/**").hasAnyAuthority("A0" , "A1")
+                .antMatchers(HttpMethod.POST , "/web/facilities/**").hasAnyAuthority("A0")
+
+                .antMatchers(HttpMethod.GET,"/web/ideas/fields").hasAnyAuthority("C0","A0", "A1", "A2")
+                .antMatchers(HttpMethod.GET , "/web/ideas/unit/**").hasAnyAuthority("C0","A0", "A1", "A2")
+                .antMatchers(HttpMethod.GET, "/web/ideas/**").hasAnyAuthority("A0", "A1", "A2")
+                .antMatchers(HttpMethod.POST , "/web/ideas/unit/**").hasAnyAuthority("A0" , "A1")
+                .antMatchers(HttpMethod.POST , "/web/ideas/**").hasAnyAuthority("A0")
+
+                .antMatchers(HttpMethod.GET , "/web/payments").hasAnyAuthority("A0")
+                .antMatchers(HttpMethod.POST , "/web/payments").hasAnyAuthority("A0")
+                .antMatchers(HttpMethod.GET, "/web/payments/{id}").hasAnyAuthority("C0","A0", "A1", "A2")
+                .antMatchers(HttpMethod.GET, "/web/payments/unit/{id}").hasAnyAuthority("C0","A0", "A1", "A2")
+
+                .antMatchers(HttpMethod.GET , "/web/units").hasAnyAuthority("A0", "A1", "A2")
+                .antMatchers(HttpMethod.POST , "/web/units").hasAnyAuthority("A0", "A1")
+                .antMatchers(HttpMethod.GET , "/web/units/{id}").hasAnyAuthority("C0","A0", "A1", "A2")
+                .antMatchers(HttpMethod.POST , "/web/units/{id}").hasAnyAuthority("A0")
+                .antMatchers(HttpMethod.GET , "/web/units/brief").hasAnyAuthority("A0", "A1", "A2")
+                .antMatchers(HttpMethod.GET , "/web/units/fields").hasAnyAuthority("C0","A0", "A1", "A2")
+                .antMatchers(HttpMethod.GET , "/web/units/report/{id}").hasAnyAuthority("C0","A0", "A1", "A2");
 
         http
                 .authorizeRequests()
                 // TODO: 3/4/2020 if we want to have basic auth just for first page we have to delete ** from second parameter
                 .antMatchers("/swagger-resources/**", "/swagger-ui.html**", "/webjars/**", "/v2/api-docs")
-                .authenticated().and().httpBasic();
+                .hasAuthority("SA").and().httpBasic();
     }
 
     @Override

@@ -1,6 +1,6 @@
 package com.cyberoxi.hstpfacilities.repositories;
 
-import com.cyberoxi.hstpfacilities.models.Admin;
+import com.cyberoxi.hstpfacilities.models.User;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
@@ -12,9 +12,9 @@ import java.util.Optional;
  * @since 1/21/20
  */
 @Repository
-public interface AdminRepository extends CrudRepository<Admin, Long> {
+public interface UserRepository extends CrudRepository<User, Long> {
 
-    Optional<Admin> findByUsernameAndPassword(String username, String password);
+    Optional<User> findByCredential_UsernameAndCredential_Password(String username, String password);
 
-    Optional<Admin> findByUsername(String username);
+    Optional<User> findByCredential_Username(String username);
 }
