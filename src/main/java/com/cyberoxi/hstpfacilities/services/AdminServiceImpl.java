@@ -59,7 +59,7 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public User save(User user) {
-        if (!user.getCredential().getRole().startsWith("A"))
+        if (!(user.getCredential().getRole().startsWith("A") || user.getCredential().getRole().startsWith("S")))
             throw new BadRequestException("Role for user must start with A");
         Credential credential = user.getCredential();
         credential.setPassword(bCryptPasswordEncoder.encode(credential.getPassword()));

@@ -2,8 +2,6 @@ package com.cyberoxi.hstpfacilities.configurations.security;
 
 
 import com.cyberoxi.hstpfacilities.components.Accesses;
-import com.cyberoxi.hstpfacilities.models.AccessLevel;
-import com.cyberoxi.hstpfacilities.models.UrlMethod;
 import com.cyberoxi.hstpfacilities.repositories.CredentialRepository;
 import com.cyberoxi.hstpfacilities.services.LoginService;
 import com.cyberoxi.hstpfacilities.services.UserDetailsServiceImpl;
@@ -23,11 +21,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 /**
  * @author Mohamad Zarei Maram
@@ -103,35 +96,35 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.GET, "/web/admins/**").hasAnyAuthority("C0", "A0", "A1", "A2")
                 .antMatchers(HttpMethod.POST, "/web/admins/**").hasAuthority("SA")
 
-                .antMatchers(HttpMethod.GET, "/web/establishments/unit/**").hasAnyAuthority("C0","A0", "A1", "A2")
+                .antMatchers(HttpMethod.GET, "/web/establishments/unit/**").hasAnyAuthority("C0", "A0", "A1", "A2")
                 .antMatchers(HttpMethod.GET, "/web/establishments/**").hasAnyAuthority("A0", "A1", "A2")
-                .antMatchers(HttpMethod.POST , "/web/establishments/unit/**").hasAnyAuthority("A0" , "A1")
-                .antMatchers(HttpMethod.POST , "/web/establishments/**").hasAnyAuthority("A0")
+                .antMatchers(HttpMethod.POST, "/web/establishments/unit/**").hasAnyAuthority("A0", "A1")
+                .antMatchers(HttpMethod.POST, "/web/establishments/**").hasAnyAuthority("A0")
 
-                .antMatchers(HttpMethod.GET,"/web/facilities/fields").hasAnyAuthority("C0","A0", "A1", "A2")
-                .antMatchers(HttpMethod.GET , "/web/facilities/unit/**").hasAnyAuthority("C0","A0", "A1", "A2")
+                .antMatchers(HttpMethod.GET, "/web/facilities/fields").hasAnyAuthority("C0", "A0", "A1", "A2")
+                .antMatchers(HttpMethod.GET, "/web/facilities/unit/**").hasAnyAuthority("C0", "A0", "A1", "A2")
                 .antMatchers(HttpMethod.GET, "/web/facilities/**").hasAnyAuthority("A0", "A1", "A2")
-                .antMatchers(HttpMethod.POST , "/web/facilities/unit/**").hasAnyAuthority("A0" , "A1")
-                .antMatchers(HttpMethod.POST , "/web/facilities/**").hasAnyAuthority("A0")
+                .antMatchers(HttpMethod.POST, "/web/facilities/unit/**").hasAnyAuthority("A0", "A1")
+                .antMatchers(HttpMethod.POST, "/web/facilities/**").hasAnyAuthority("A0")
 
-                .antMatchers(HttpMethod.GET,"/web/ideas/fields").hasAnyAuthority("C0","A0", "A1", "A2")
-                .antMatchers(HttpMethod.GET , "/web/ideas/unit/**").hasAnyAuthority("C0","A0", "A1", "A2")
+                .antMatchers(HttpMethod.GET, "/web/ideas/fields").hasAnyAuthority("C0", "A0", "A1", "A2")
+                .antMatchers(HttpMethod.GET, "/web/ideas/unit/**").hasAnyAuthority("C0", "A0", "A1", "A2")
                 .antMatchers(HttpMethod.GET, "/web/ideas/**").hasAnyAuthority("A0", "A1", "A2")
-                .antMatchers(HttpMethod.POST , "/web/ideas/unit/**").hasAnyAuthority("A0" , "A1")
-                .antMatchers(HttpMethod.POST , "/web/ideas/**").hasAnyAuthority("A0")
+                .antMatchers(HttpMethod.POST, "/web/ideas/unit/**").hasAnyAuthority("A0", "A1")
+                .antMatchers(HttpMethod.POST, "/web/ideas/**").hasAnyAuthority("A0")
 
-                .antMatchers(HttpMethod.GET , "/web/payments").hasAnyAuthority("A0")
-                .antMatchers(HttpMethod.POST , "/web/payments").hasAnyAuthority("A0")
-                .antMatchers(HttpMethod.GET, "/web/payments/{id}").hasAnyAuthority("C0","A0", "A1", "A2")
-                .antMatchers(HttpMethod.GET, "/web/payments/unit/{id}").hasAnyAuthority("C0","A0", "A1", "A2")
+                .antMatchers(HttpMethod.GET, "/web/payments").hasAnyAuthority("A0")
+                .antMatchers(HttpMethod.POST, "/web/payments").hasAnyAuthority("A0")
+                .antMatchers(HttpMethod.GET, "/web/payments/{id}").hasAnyAuthority("C0", "A0", "A1", "A2")
+                .antMatchers(HttpMethod.GET, "/web/payments/unit/{id}").hasAnyAuthority("C0", "A0", "A1", "A2")
 
-                .antMatchers(HttpMethod.GET , "/web/units").hasAnyAuthority("A0", "A1", "A2")
-                .antMatchers(HttpMethod.POST , "/web/units").hasAnyAuthority("A0", "A1")
-                .antMatchers(HttpMethod.GET , "/web/units/{id}").hasAnyAuthority("C0","A0", "A1", "A2")
-                .antMatchers(HttpMethod.POST , "/web/units/{id}").hasAnyAuthority("A0")
-                .antMatchers(HttpMethod.GET , "/web/units/brief").hasAnyAuthority("A0", "A1", "A2")
-                .antMatchers(HttpMethod.GET , "/web/units/fields").hasAnyAuthority("C0","A0", "A1", "A2")
-                .antMatchers(HttpMethod.GET , "/web/units/report/{id}").hasAnyAuthority("C0","A0", "A1", "A2");
+                .antMatchers(HttpMethod.GET, "/web/units").hasAnyAuthority("A0", "A1", "A2")
+                .antMatchers(HttpMethod.POST, "/web/units").hasAnyAuthority("A0", "A1")
+                .antMatchers(HttpMethod.GET, "/web/units/{id}").hasAnyAuthority("C0", "A0", "A1", "A2")
+                .antMatchers(HttpMethod.POST, "/web/units/{id}").hasAnyAuthority("A0")
+                .antMatchers(HttpMethod.GET, "/web/units/brief").hasAnyAuthority("A0", "A1", "A2")
+                .antMatchers(HttpMethod.GET, "/web/units/fields").hasAnyAuthority("C0", "A0", "A1", "A2")
+                .antMatchers(HttpMethod.GET, "/web/units/report/{id}").hasAnyAuthority("C0", "A0", "A1", "A2");
 
         http
                 .authorizeRequests()
