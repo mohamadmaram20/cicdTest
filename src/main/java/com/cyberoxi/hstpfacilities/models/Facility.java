@@ -2,6 +2,7 @@ package com.cyberoxi.hstpfacilities.models;
 
 import com.cyberoxi.hstpfacilities.models.audits.AuditModel;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -27,11 +28,13 @@ public class Facility extends AuditModel {
     @Temporal(TemporalType.DATE)
     @JsonFormat(pattern = "yyyy-MM-dd")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @ApiModelProperty(example = "2020-02-02")
     private Date contractDate;
 
     @Temporal(TemporalType.DATE)
     @JsonFormat(pattern = "yyyy-MM-dd")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @ApiModelProperty(example = "2020-02-02")
     private Date lastApprovalDateCreditCommittee; //تاریخ آخرین مصوبه کارگروه اعتبارات
 
     private String approvedText;
@@ -44,16 +47,19 @@ public class Facility extends AuditModel {
     @Temporal(TemporalType.DATE)
     @JsonFormat(pattern = "yyyy-MM-dd")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @ApiModelProperty(example = "2020-02-02")
     private Date installmentsStartDate; //تاريخ شروع اقساط
 
     @Temporal(TemporalType.DATE)
     @JsonFormat(pattern = "yyyy-MM-dd")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @ApiModelProperty(example = "2020-02-02")
     private Date installmentsEndDate; //تاريخ خاتمه اقساط
 
     @Temporal(TemporalType.DATE)
     @JsonFormat(pattern = "yyyy-MM-dd")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @ApiModelProperty(example = "2020-02-02")
     private Date installmentsRepaymentDate; //تاریخ آخرین بازپرداخت اقساط
 
     private long installmentsRepaymentAmount; //مبلغ بازپرداخت اقساط
@@ -61,5 +67,6 @@ public class Facility extends AuditModel {
     @Temporal(TemporalType.DATE)
     @JsonFormat(pattern = "yyyy-MM-dd")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @ApiModelProperty(example = "2020-02-02")
     private Date recentChangeApprovedDate; //تاریخ آخرین تغییرات مصوبه
 }

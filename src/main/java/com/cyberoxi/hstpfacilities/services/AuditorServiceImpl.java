@@ -55,6 +55,7 @@ public class AuditorServiceImpl implements AuditorService {
 
     @Override
     public long establishmentPaid(Establishment establishment) {
+        // TODO: 3/12/2020 dateAfterEqual and check for payment(mmk)
         int paidAmount = 0;
         Iterable<Payment> establishmentPayments = paymentRepository.findAllByContractTypeAndContractIdAndTransactionDateAfter('e', establishment.getId(), establishment.getContractStartDate());
         for (Payment payment : establishmentPayments)

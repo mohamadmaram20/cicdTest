@@ -2,6 +2,7 @@ package com.cyberoxi.hstpfacilities.models;
 
 import com.cyberoxi.hstpfacilities.models.audits.AuditModel;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -34,6 +35,7 @@ public class Unit extends AuditModel {
     @Temporal(TemporalType.DATE)
     @JsonFormat(pattern = "yyyy-MM-dd")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @ApiModelProperty(example = "2020-02-02")
     private Date registrationDate;
 
     private String name;

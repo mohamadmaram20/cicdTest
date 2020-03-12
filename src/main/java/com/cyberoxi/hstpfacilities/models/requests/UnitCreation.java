@@ -3,6 +3,7 @@ package com.cyberoxi.hstpfacilities.models.requests;
 import com.cyberoxi.hstpfacilities.models.Credential;
 import com.cyberoxi.hstpfacilities.models.Person;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -34,6 +35,7 @@ public class UnitCreation {
     @Temporal(TemporalType.DATE)
     @JsonFormat(pattern = "yyyy-MM-dd")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @ApiModelProperty(example = "2020-02-02")
     private Date registrationDate;
 
     private String name;
