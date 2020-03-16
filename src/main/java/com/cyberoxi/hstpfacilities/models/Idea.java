@@ -19,5 +19,7 @@ public class Idea extends AuditModel {
     private String title;
     private byte field;
     private String usage;
+
+    @Column(columnDefinition = "text")
     private String summary;
 }

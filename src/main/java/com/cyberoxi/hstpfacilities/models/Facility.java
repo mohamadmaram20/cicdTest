@@ -6,10 +6,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.persistence.Entity;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.persistence.*;
 import java.util.Date;
 
 /**
@@ -37,7 +34,9 @@ public class Facility extends AuditModel {
     @ApiModelProperty(example = "2020-02-02")
     private Date lastApprovalDateCreditCommittee; //تاریخ آخرین مصوبه کارگروه اعتبارات
 
+    @Column(columnDefinition = "text")
     private String approvedText;
+
     private byte changeType;
     private long approvedAmount; //مبلغ مصوب
     private long totalReceivedFacility; //کل تسهیلات دریافتی(میلیون ریال)
@@ -56,13 +55,7 @@ public class Facility extends AuditModel {
     @ApiModelProperty(example = "2020-02-02")
     private Date installmentsEndDate; //تاريخ خاتمه اقساط
 
-    @Temporal(TemporalType.DATE)
-    @JsonFormat(pattern = "yyyy-MM-dd")
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    @ApiModelProperty(example = "2020-02-02")
-    private Date installmentsRepaymentDate; //تاریخ آخرین بازپرداخت اقساط
-
-    private long installmentsRepaymentAmount; //مبلغ بازپرداخت اقساط
+    private long installmentsRepaymentAmount; //مبلغ کل بازپرداخت اقساط
 
     @Temporal(TemporalType.DATE)
     @JsonFormat(pattern = "yyyy-MM-dd")

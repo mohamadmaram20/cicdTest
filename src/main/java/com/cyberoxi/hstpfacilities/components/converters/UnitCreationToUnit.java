@@ -2,7 +2,6 @@ package com.cyberoxi.hstpfacilities.components.converters;
 
 import com.cyberoxi.hstpfacilities.models.Unit;
 import com.cyberoxi.hstpfacilities.models.requests.UnitCreation;
-import lombok.SneakyThrows;
 import lombok.Synchronized;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.lang.Nullable;
@@ -38,6 +37,9 @@ public class UnitCreationToUnit implements Converter<UnitCreation, Unit> {
         unit.setPostalAddress(unitCreation.getPostalAddress());
         unit.setEmail(unitCreation.getEmail());
         unit.setAvatar(unitCreation.getAvatar());
+        unit.setSignatureOwners(unitCreation.getSignatureOwners());
+        unit.setTeammates(unitCreation.getTeammates());
+        unit.setReceptionDates(unitCreation.getReceptionDates());
         return unit;
     }
 }

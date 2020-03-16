@@ -2,15 +2,16 @@ package com.cyberoxi.hstpfacilities.models.requests;
 
 import com.cyberoxi.hstpfacilities.models.Credential;
 import com.cyberoxi.hstpfacilities.models.Person;
+import com.cyberoxi.hstpfacilities.models.ReceptionDate;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author Mohamad Zarei Maram
@@ -55,4 +56,8 @@ public class UnitCreation {
     private String postalAddress;
     private String email;
     private String avatar;
+
+    private List<Person> signatureOwners;
+    private List<Person> teammates;
+    private List<ReceptionDate> receptionDates;
 }

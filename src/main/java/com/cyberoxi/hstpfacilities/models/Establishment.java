@@ -6,10 +6,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.persistence.Entity;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.persistence.*;
 import java.util.Date;
 
 /**
@@ -24,6 +21,8 @@ import java.util.Date;
 public class Establishment extends AuditModel {
 
     private String contractNumber;
+
+    @Column(columnDefinition = "text")
     private String place;
 
     @Temporal(TemporalType.DATE)
