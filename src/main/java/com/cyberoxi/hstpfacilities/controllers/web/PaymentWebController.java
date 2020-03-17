@@ -48,4 +48,10 @@ public class PaymentWebController {
     public ResponseEntity<?> insertPayment(@RequestBody Payment payment) {
         return ResponseEntity.ok(paymentService.savePayment(payment));
     }
+
+    @GetMapping("/debt/unit/{unitId}")
+    @ApiOperation(value = "UnitDebtPay", notes = "Unit debt pay by id and debt type")
+    public ResponseEntity<?> debtPay(@PathVariable long unitId, @RequestParam("type") char type) {
+        return ResponseEntity.ok(paymentService.debtPay(unitId, type));
+    }
 }

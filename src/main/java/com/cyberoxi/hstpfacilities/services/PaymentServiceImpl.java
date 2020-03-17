@@ -2,6 +2,7 @@ package com.cyberoxi.hstpfacilities.services;
 
 import com.cyberoxi.hstpfacilities.components.Generator;
 import com.cyberoxi.hstpfacilities.exceptions.BadRequestException;
+import com.cyberoxi.hstpfacilities.models.AString;
 import com.cyberoxi.hstpfacilities.models.Payment;
 import com.cyberoxi.hstpfacilities.repositories.EstablishmentRepository;
 import com.cyberoxi.hstpfacilities.repositories.FacilityRepository;
@@ -61,5 +62,17 @@ public class PaymentServiceImpl implements PaymentService {
             // FIXME: 2/2/2020 send some good message
             throw new BadRequestException("contractId or unitId not exist");
         }
+    }
+
+    @Override
+    public AString debtPay(long unitId, char type) {
+        if (type == 'e')
+            return new AString("http://2.185.143.61:6060/v1/payment/" + unitId + "?type=" + type);
+            //return new AString("http://localhost:6060/v1/payment/" + unitId + "?type=" + type);
+        else if (type == 'f')
+            return new AString("http://2.185.143.61:6060/v1/payment/" + unitId + "?type=" + type);
+            //return new AString("http://localhost:6060/v1/payment/" + unitId + "?type=" + type);
+        else
+            throw new BadRequestException("type not matched");
     }
 }

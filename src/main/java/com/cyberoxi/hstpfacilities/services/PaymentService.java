@@ -1,5 +1,6 @@
 package com.cyberoxi.hstpfacilities.services;
 
+import com.cyberoxi.hstpfacilities.models.AString;
 import com.cyberoxi.hstpfacilities.models.Payment;
 
 
@@ -17,4 +18,6 @@ public interface PaymentService {
     Payment getPayment(long id);
 
     Payment savePayment(Payment payment);
+
+    AString debtPay(long unitId, char type);
 }
