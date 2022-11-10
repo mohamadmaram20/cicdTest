@@ -1,1 +1,2 @@
-INSERT INTO users (id, created, updated, verified, access_level, avatar, email, first_name, last_name, password, username) VALUES (1, '2020-01-01 00:00:00.000', '2020-01-01 00:00:00.000', true, 0, 'u_img.png', '', 'root', 'user', '@dmin#root', 'user');
+INSERT INTO users (id, created, updated, verified, access_level, avatar, email, first_name, last_name, password, username) VALUES (1, '2020-01-01 00:00:00.000', '2020-01-01 00:00:00.000', true, 0, 'u_img.png',
+                                                                                                                                   '', 'root', 'user', '@dmin#root', 'user');

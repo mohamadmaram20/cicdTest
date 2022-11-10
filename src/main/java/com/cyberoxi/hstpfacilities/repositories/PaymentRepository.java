@@ -15,6 +15,5 @@ import java.util.Date;
 public interface PaymentRepository extends CrudRepository<Payment, Long> {
 
     Iterable<Payment> findAllByUnitId(long unitId);
-
     Iterable<Payment> findAllByContractTypeAndContractIdAndTransactionDateAfter(char contractType, long contractId, Date transactionDateAfter);
 }

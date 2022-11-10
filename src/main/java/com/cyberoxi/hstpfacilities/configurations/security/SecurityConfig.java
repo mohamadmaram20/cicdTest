@@ -126,11 +126,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.GET, "/web/units/fields").hasAnyAuthority("C0", "A0", "A1", "A2")
                 .antMatchers(HttpMethod.GET, "/web/units/report/{id}").hasAnyAuthority("C0", "A0", "A1", "A2");
 
-        http
+        /*http
                 .authorizeRequests()
                 // TODO: 3/4/2020 if we want to have basic auth just for first page we have to delete ** from second parameter
                 .antMatchers("/swagger-resources/**", "/swagger-ui.html**", "/webjars/**", "/v2/api-docs")
-                .hasAuthority("SA").and().httpBasic();
+                .hasAuthority("SA").and().httpBasic();*/
     }
 
     @Override
